@@ -28,9 +28,10 @@ jobs:
         run: |
           set -euo pipefail
           PORT=${FTP_PORT:-21}
-          echo "Deploying backend/ to $FTP_SERVER:$PORT -> $FTP_REMOTE_PATH"
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$PORT" "$FTP_SERVER" <<'EOF'
+          REMOTE_PATH=${FTP_REMOTE_PATH:-/}
+          echo "Deploying backend/ to $FTP_SERVER:$PORT -> $REMOTE_PATH"
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$PORT" "$FTP_SERVER" <<EOF
           set ssl:verify-certificate no
-          mirror -R --delete --verbose backend "$FTP_REMOTE_PATH"
+          mirror -R --delete --verbose backend "$REMOTE_PATH"
           bye
           EOF
