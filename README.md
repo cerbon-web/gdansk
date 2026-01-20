@@ -1,23 +1,29 @@
 # Mosque of Gdansk
 
-A simple HTML project showcasing information about the Mosque of Gdansk.
+Project organized into `frontend` and `backend` folders.
 
-## Description
+## Structure
 
-This project contains a basic HTML page with information about the Islamic Cultural Centre in Gdansk, Poland. It includes sections on the mosque's history, purpose, and contact information.
+- `frontend/` : Static site files (open `frontend/index.html` in a browser).
+- `backend/`  : Node.js backend (API) with Express.
 
-## Usage
+## Quick start
 
-To view the page, open `index.html` in any web browser.
+Frontend (static):
 
-## Files
+```powershell
+start frontend\index.html
+```
 
-- `index.html`: The main HTML page with content and styling.
+Backend (Node.js):
 
-## Contributing
+```powershell
+cd backend; npm install; npm start
+```
 
-Feel free to contribute by updating the content or improving the design.
+API endpoints:
 
-## License
+- `GET http://localhost:3000/api/info` - site metadata
+- `GET http://localhost:3000/health` - health check
 
-This project is for educational purposes.
+Feel free to update the frontend content in `frontend/` or extend the backend in `backend/src/`.
