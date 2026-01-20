@@ -25,7 +25,45 @@
 
     <h2>API</h2>
     <p>There is a small backend API available at <code>/api/info</code> when the Node.js backend is running.</p>
+    <div class="api-controls">
+      <button id="call-backend-btn">Call backend /test</button>
+      <label for="api-output" class="visually-hidden">API output</label>
+      <textarea id="api-output" rows="8" readonly placeholder="JSON output will appear here..."></textarea>
+    </div>
   </main>
+  <script>
+    (function(){
+      const btn = document.getElementById('call-backend-btn');
+      const out = document.getElementById('api-output');
+      const endpoint = 'http://api.cerbon.id/gdansk/test';
+
+      function setLoading(loading){
+        btn.disabled = loading;
+        btn.textContent = loading ? 'Loading...' : 'Call backend /test';
+      }
+
+      async function callBackend(){
+        setLoading(true);
+        out.value = '';
+        try{
+          const res = await fetch(endpoint, { method: 'GET', mode: 'cors' });
+          const text = await res.text();
+          try{
+            const json = JSON.parse(text);
+            out.value = JSON.stringify(json, null, 2);
+          }catch(e){
+            out.value = text;
+          }
+        }catch(err){
+          out.value = 'Error: ' + (err && err.message ? err.message : String(err));
+        }finally{
+          setLoading(false);
+        }
+      }
+
+      btn.addEventListener('click', callBackend);
+    })();
+  </script>
   <footer>
     <p>&copy; 2026 Mosque of Gdansk. All rights reserved.</p>
   </footer>
