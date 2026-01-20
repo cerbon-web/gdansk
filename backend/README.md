@@ -12,6 +12,5 @@ npm install
 npm start
 ```
 
-- The server starts on port `3000` by default.
-- API endpoint: `GET /api/info` returns JSON with site metadata.
-- Health check: `GET /health`.
+- Server runs on port `3000` by default.
+- Endpoint: `GET /test` returns JSON with current time and Node version.
