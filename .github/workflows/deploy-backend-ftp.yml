@@ -7,23 +7,29 @@ on:
 
 jobs:
   deploy-backend:
+          FTP_ALLOW_ROOT_WIPE: ${{ secrets.FTP_ALLOW_ROOT_WIPE }}
     name: Deploy backend folder to FTP
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install lftp
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
-
-      - name: Deploy `backend/` to FTP server with lftp
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+          set -euo pipefail
+          PORT=${FTP_PORT:-21}
+          REMOTE_PATH=${FTP_REMOTE_PATH:-/}
+          echo "Deploying backend/ to $FTP_SERVER:$PORT -> $REMOTE_PATH"
+          # safety: require explicit allow to wipe root '/'
+          if [ "$REMOTE_PATH" = "/" ] && [ "${FTP_ALLOW_ROOT_WIPE:-false}" != "true" ]; then
+            echo "Refusing to wipe root path '/'. Set secret FTP_ALLOW_ROOT_WIPE=true to allow this destructive action."
+            exit 1
+          fi
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p "$PORT" "$FTP_SERVER" <<EOF
+          set ssl:verify-certificate no
+          cd "$REMOTE_PATH"
+          # purge all visible files and directories in the target folder (ignore errors)
+          glob -a rm -r * || true
+          # attempt to remove dotfiles (skips '.' and '..')
+          glob -a rm -r .[^.]* || true
+          # upload fresh files from backend into the current remote directory
+          mirror -R --delete --verbose backend .
+          bye
+          EOF
           FTP_PORT: ${{ secrets.FTP_PORT }}
         run: |
           set -euo pipefail
