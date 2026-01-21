@@ -26,10 +26,18 @@ jobs:
           cd frontend-raw
           npm install --no-audit --no-fund
           npm run build -- --output-path=../frontend
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: frontend
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+      - name: Publish to gh-pages branch
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # prepare temp directory for publishing
+          PUBLISH_DIR=$(mktemp -d)
+          cp -R frontend/* "$PUBLISH_DIR"
+          cd "$PUBLISH_DIR"
+          git init
+          git add -A
+          git commit -m "Deploy site: ${GITHUB_SHA}"
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${REPO}.git" master:gh-pages
