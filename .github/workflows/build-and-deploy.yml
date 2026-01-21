@@ -24,8 +24,12 @@ jobs:
       - name: Install & Build
         run: |
           cd frontend-raw
-            npm install --no-audit --no-fund
+          npm install --no-audit --no-fund
           npm run build -- --output-path=../frontend
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: frontend
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
@@ -35,7 +39,3 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
-        - name: Upload Pages artifact
-          uses: actions/upload-pages-artifact@v2
-          with:
-            path: frontend
