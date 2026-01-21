@@ -15,7 +15,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["CNAME"],
+            "assets": ["src/CNAME"],
             "styles": ["src/styles.css"]
           },
           "configurations": {
