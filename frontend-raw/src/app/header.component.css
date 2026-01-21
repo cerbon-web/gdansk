@@ -1,3 +1,5 @@
 .flag-bar{display:flex;gap:8px;justify-content:center;margin:10px 0}
-.flag-bar button{font-size:20px;padding:6px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer}
-.flag-bar button:hover{transform:translateY(-2px)}
+.flag-btn{padding:4px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer;display:inline-flex;align-items:center}
+.flag-btn:hover{transform:translateY(-2px)}
+.flag-img{width:28px;height:20px;display:block}
+
