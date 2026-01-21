@@ -1,21 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { TranslateModule, TranslateService, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, HeaderComponent, TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-      useFactory: HttpLoaderFactory,
-      deps: [HttpClient]
-    }
-  })],
+  imports: [CommonModule, HeaderComponent, TranslateModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -49,8 +42,4 @@ export class AppComponent {
       complete: () => console.log('API request completed')
     });
   }
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 }
