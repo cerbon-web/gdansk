@@ -1,0 +1,7 @@
+{
+  "name": "gdansk-repo",
+  "private": true,
+  "workspaces": [
+    "frontend-raw"
+  ]
+}
