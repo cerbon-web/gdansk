@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies (root)
         run: |
-          npm ci
+          npm install --no-audit --no-fund
 
       - name: Build frontend workspace
         run: |
