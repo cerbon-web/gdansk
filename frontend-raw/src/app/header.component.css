@@ -1,4 +1,7 @@
-.flag-bar{display:flex;gap:8px;justify-content:center;margin:10px 0}
+:host{display:block}
+.flag-container{position:fixed;top:6px;left:6px;z-index:1000}
+.rtl .flag-container{right:6px;left:auto}
+.flag-bar{display:flex;gap:8px;justify-content:center;margin:0}
 .flag-btn{padding:4px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer;display:inline-flex;align-items:center}
 .flag-btn:hover{transform:translateY(-2px)}
 .flag-img{width:28px;height:20px;display:block}

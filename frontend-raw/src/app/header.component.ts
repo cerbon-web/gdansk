@@ -16,8 +16,14 @@ export class HeaderComponent {
 
   switch(lang: string) {
     this.translate.use(lang);
-    // set dir for Arabic
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    // set dir for Arabic and toggle rtl class for styling
+    const isRtl = (lang === 'ar');
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    if (isRtl) {
+      document.documentElement.classList.add('rtl');
+    } else {
+      document.documentElement.classList.remove('rtl');
+    }
     this.languageChanged.emit(lang);
   }
 }
