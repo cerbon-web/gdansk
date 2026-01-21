@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "https://json.schemastore.org/angular-cli",
   "version": 1,
   "projects": {
     "frontend-raw": {
@@ -31,7 +31,6 @@
       }
     }
   },
-  "defaultProject": "frontend-raw",
   "cli": {
     "analytics": false
   }

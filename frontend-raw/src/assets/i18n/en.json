@@ -1,0 +1,8 @@
+{
+  "TITLE": "Frontend Raw",
+  "DESCRIPTION": "A minimal Angular 21 app — build outputs to the sibling frontend folder.",
+  "CALL_API": "Call API Test",
+  "CALLING": "Calling...",
+  "OK": "OK: {{0}}",
+  "ERROR": "Error: {{0}}"
+}

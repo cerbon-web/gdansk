@@ -1,8 +1,9 @@
+<app-header></app-header>
 <div style="text-align:center">
-  <h1>{{ title }}</h1>
-  <p>A minimal Angular 21 app — build outputs to the sibling frontend folder.</p>
+  <h1>{{ 'TITLE' | translate }}</h1>
+  <p>{{ 'DESCRIPTION' | translate }}</p>
   <p>
-    <button (click)="callTest()">Call API Test</button>
+    <button (click)="callTest()">{{ 'CALL_API' | translate }}</button>
   </p>
   <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
 </div>
