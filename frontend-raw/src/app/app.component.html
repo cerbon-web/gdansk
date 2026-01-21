@@ -4,5 +4,5 @@
   <p>
     <button (click)="callTest()">Call API Test</button>
   </p>
-  <p *ngIf="apiMessage">{{ apiMessage }}</p>
+  <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
 </div>
