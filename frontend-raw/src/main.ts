@@ -5,7 +5,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+	const baseEl = document.getElementsByTagName('base')[0];
+	const baseHref = baseEl ? baseEl.getAttribute('href') || '' : '';
+	const prefix = (baseHref || '') + 'assets/i18n/';
+	return new TranslateHttpLoader(http, prefix, '.json');
 }
 
 bootstrapApplication(AppComponent, {
