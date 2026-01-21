@@ -12,7 +12,7 @@ export class AppComponent {
 
   callTest(): void {
     this.apiMessage = 'Calling...';
-    fetch('http://api.cerbon.id/gdansk/test')
+    fetch('https://api.cerbon.id/gdansk/test')
       .then(async (res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const text = await res.text();
