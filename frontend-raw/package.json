@@ -6,7 +6,6 @@
     "ng": "ng",
     "start": "ng serve --open --port 4200",
     "build": "ng build --configuration production",
-    "predeploy": "npm run build && node scripts/copy-cname.js",
     "deploy": "gh-pages -d frontend -b gh-pages",
     "build:dev": "ng build",
     "test": "ng test",
