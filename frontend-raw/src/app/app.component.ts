@@ -20,11 +20,15 @@ export class AppComponent {
   constructor(private http: HttpClient, private translate: TranslateService) {
     // configure ngx-translate
     translate.addLangs(['en', 'pl', 'tr', 'ru', 'ar']);
-    translate.setDefaultLang('en');
-    const browserLang = (navigator.language || 'en').split('-')[0];
-    const startLang = ['en','pl','tr','ru','ar'].includes(browserLang) ? browserLang : 'en';
+    // make Arabic the default language
+    translate.setDefaultLang('ar');
+    const browserLang = (navigator.language || 'ar').split('-')[0];
+    // prefer browser language when supported, otherwise default to Arabic
+    const startLang = ['en','pl','tr','ru','ar'].includes(browserLang) ? browserLang : 'ar';
     translate.use(startLang);
-    document.documentElement.dir = (startLang === 'ar') ? 'rtl' : 'ltr';
+    const isRtl = (startLang === 'ar');
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    if (isRtl) document.documentElement.classList.add('rtl');
   }
 
   callTest(): void {
