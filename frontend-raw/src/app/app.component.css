@@ -114,21 +114,21 @@ button[disabled] {
   transform: translateY(-3px);
 }
 
-@media (max-width: 480px){
-  .big-action-button{ font-size: 22px; padding: 16px 20px; min-width: 260px; }
-  /* Larger icons on mobile for better tap target and visibility */
-  .big-action-button .icon{ width:112px; height:112px; flex:0 0 112px; }
-  .big-action-button .icon.raster{ width:128px; height:128px; flex:0 0 128px; }
-  .big-action-button{ min-height: 340px; }
+@media (max-width: 480px) {
+  .big-action-button {
+    font-size: 22px;
+    padding: 16px 20px;
+    min-width: 260px;
+    /* reduce mobile height to 75% of previous 340px so two stacked buttons fit */
+    min-height: 255px;
+    gap: 18px;
+    box-sizing: border-box;
+  }
+
+  .big-action-button .icon { width: 112px; height: 112px; flex: 0 0 112px; }
+  .big-action-button .icon.raster { width: 128px; height: 128px; flex: 0 0 128px; }
 }
 
-/* Short viewport heights (small phones) - reduce button height so two stacked buttons fit */
-@media (max-height: 700px) {
-  .main-actions { min-height: calc(100vh - 100px); gap: 12px; padding: 12px; }
-  .big-action-button { min-height: 260px; padding: 12px 16px; gap: 12px; font-size: 20px; }
-  .big-action-button .icon { width: 80px; height: 80px; flex: 0 0 80px; }
-  .big-action-button .icon.raster { width: 96px; height: 96px; flex: 0 0 96px; }
-}
 
 /* Show buttons side-by-side on wider screens (laptops/tablets) */
 @media (min-width: 768px) {
