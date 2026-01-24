@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ export class AppComponent {
     this.checkBackendConnectivity();
   }
 
-  constructor(private http: HttpClient, private translate: TranslateService) {
+  constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title) {
     // configure ngx-translate
     translate.addLangs(['en', 'pl', 'tr', 'ru', 'ar']);
     // make Arabic the default language but prefer saved selection in localStorage
@@ -37,6 +38,16 @@ export class AppComponent {
     const isRtl = (startLang === 'ar');
     document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     if (isRtl) document.documentElement.classList.add('rtl'); else document.documentElement.classList.remove('rtl');
+    // set document title from translations and update on language change
+    this.setTranslatedTitle();
+    this.translate.onLangChange.subscribe(() => this.setTranslatedTitle());
+  }
+
+  private setTranslatedTitle(): void {
+    this.translate.get('TITLE').subscribe((t: string) => {
+      // update Angular Title service (also updates document.title)
+      try { this.titleService.setTitle(t); } catch { document.title = t; }
+    });
   }
 
   checkBackendConnectivity(): void {
