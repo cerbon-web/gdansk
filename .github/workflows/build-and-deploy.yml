@@ -26,9 +26,10 @@ jobs:
         run: |
           npm install --no-audit --no-fund
 
-      - name: Build frontend workspace
+      - name: Build frontend
         run: |
-          npm run build --workspace=frontend-raw -- --output-path=frontend
+          cd frontend-raw
+          npm run build -- --output-path=../frontend
       - name: Publish to gh-pages branch
         env:
           REPO: ${{ github.repository }}
