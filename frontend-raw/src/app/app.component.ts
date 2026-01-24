@@ -50,6 +50,17 @@ export class AppComponent {
     });
   }
 
+  private formatIsoLocal(d: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const mi = pad(d.getMinutes());
+    const ss = pad(d.getSeconds());
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+  }
+
   checkBackendConnectivity(): void {
     console.log('checkBackendConnectivity invoked');
     this.loading = true;
@@ -67,9 +78,13 @@ export class AppComponent {
         try {
           const obj = JSON.parse(text);
           if (obj && obj.time) {
-            this.createdAt = obj.time;
             const d = new Date(obj.time);
-            if (!isNaN(d.getTime())) this.createdYear = String(d.getFullYear());
+            if (!isNaN(d.getTime())) {
+              this.createdYear = String(d.getFullYear());
+              this.createdAt = this.formatIsoLocal(d);
+            } else {
+              this.createdAt = obj.time;
+            }
           }
         } catch (e) {
           // not JSON — ignore
