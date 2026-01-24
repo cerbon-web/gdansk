@@ -15,6 +15,8 @@ export class HeaderComponent {
   constructor(private translate: TranslateService) {}
 
   switch(lang: string) {
+    // persist selection
+    try { localStorage.setItem('lang', lang); } catch { /* ignore */ }
     this.translate.use(lang);
     // set dir for Arabic and toggle rtl class for styling
     const isRtl = (lang === 'ar');

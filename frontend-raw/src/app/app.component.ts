@@ -27,13 +27,14 @@ export class AppComponent {
   constructor(private http: HttpClient, private translate: TranslateService) {
     // configure ngx-translate
     translate.addLangs(['en', 'pl', 'tr', 'ru', 'ar']);
-    // make Arabic the default language and always start in Arabic
+    // make Arabic the default language but prefer saved selection in localStorage
     translate.setDefaultLang('ar');
-    const startLang = 'ar';
+    const saved = (() => { try { return localStorage.getItem('lang'); } catch { return null; } })();
+    const startLang = saved && ['en','pl','tr','ru','ar'].includes(saved) ? saved : 'ar';
     translate.use(startLang);
-    const isRtl = true;
-    document.documentElement.dir = 'rtl';
-    document.documentElement.classList.add('rtl');
+    const isRtl = (startLang === 'ar');
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    if (isRtl) document.documentElement.classList.add('rtl'); else document.documentElement.classList.remove('rtl');
   }
 
   checkBackendConnectivity(): void {
