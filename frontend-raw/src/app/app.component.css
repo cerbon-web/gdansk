@@ -80,10 +80,23 @@ button[disabled] {
   color: #ffffff;
   box-shadow: 0 6px 20px rgba(2,6,23,0.25);
   cursor: pointer;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   line-height: 1.1;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
   direction: rtl;
+}
+
+.big-action-button .icon{
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+.btn-label{
+  display: inline-block;
 }
 
 .big-action-button:hover{
@@ -92,14 +105,21 @@ button[disabled] {
 
 @media (max-width: 480px){
   .big-action-button{ font-size: 22px; padding: 16px 20px; min-width: 260px; }
+  .big-action-button .icon{ width:36px; height:36px; flex:0 0 36px; }
+  .big-action-button{ min-height: 220px; }
 }
 
 /* Show buttons side-by-side on wider screens (laptops/tablets) */
 @media (min-width: 768px) {
+  /* Side-by-side layout but don't stretch buttons to the full available height */
   .main-actions { flex-direction: row; align-items: center; justify-content: center; }
   .big-action-button {
     min-width: 260px;
     max-width: 420px;
     width: 44%;
+    min-height: 320px; /* equal height for both buttons without filling viewport */
   }
 }
+
+/* Ensure labels wrap neatly and center within button */
+.btn-label{ text-align:center; white-space:normal; }
