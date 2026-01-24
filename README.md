@@ -1,4 +1,4 @@
-# Mosque of Gdansk
+# Mosque of Gdańsk Contest
 
 Project organized into `frontend` and `backend` folders.
 
@@ -15,35 +15,76 @@ Frontend (static):
 start frontend\index.html
 ```
 
-Backend (Node.js):
+# Ramadan Contests — Mosque of Gdańsk
+
+This project powers two community contests that will run during Ramadan:
+
+- Quran Contest — a team-based memorization contest focused on steady progress and fair scoring.
+- Daily Taraweeh Contest — a short daily challenge held after the Taraweeh prayer.
+
+## Project Purpose
+
+The goal is to provide an easy-to-use platform for running community competitions during Ramadan that track participant progress, compute fair team scores, and present daily challenges.
+
+## Contests Overview
+
+- **Quran Contest (team-based memorization)**
+	- Teams are formed of multiple members.
+	- Each member reports memorization progress (chapters, verses, or percentage).
+	- Team score is computed from members' progress while taking into account individual ability so stronger memorizers don't overshadow beginners — the scoring aims to reward inclusive improvement and consistent progress.
+	- Administrators can create teams, add/remove members, and record/approve progress entries.
+
+- **Daily Taraweeh Contest (after Taraweeh)**
+	- A short daily contest or quiz held after Taraweeh prayer (e.g., short Qur'anic questions, tajweed challenges, or recitation checks).
+	- Results are recorded daily and leaderboards updated.
+
+## Key Features
+
+- Team management (create teams, invite/add members)
+- Individual progress tracking and approval workflow
+- Fair scoring mechanics that weight improvement and member ability
+- Daily contest scheduling and result capture
+- Leaderboards and per-team/per-member summaries
+
+## Repo Structure
+
+- `backend/` — Node.js API and admin endpoints (see `backend/app.js`).
+- `frontend/` — Built static frontend assets (for simple hosting).
+- `frontend-raw/` — Angular source used to develop the frontend UI (`src/` contains app code and assets).
+
+See the folders for implementation details and to continue development.
+
+## Run locally (quick)
+
+Backend (Windows / PowerShell):
 
 ```powershell
-cd backend; npm install; npm start
+cd backend
+npm install
+npm start
 ```
 
-API endpoints:
+Frontend (development using `frontend-raw` Angular):
 
-- `GET http://localhost:3000/api/info` - site metadata
-- `GET http://localhost:3000/health` - health check
+```powershell
+cd frontend-raw
+npm install
+npm start
+```
 
-Feel free to update the frontend content in `frontend/` or extend the backend in `backend/src/`.
+Or open the built static frontend from `frontend/index.html` in a browser for a simple preview.
 
-## CI / CD: FTP deploy for backend
+## Configuration notes
 
-A GitHub Action workflow has been added at `.github/workflows/deploy-backend-ftp.yml` to upload the `backend/` folder to an FTP server whenever commits are pushed to the `main` branch.
+- The backend typically listens on `http://localhost:3000` by default; check `backend/app.js`.
+- For production deployments, host the static `frontend/` files on any static hosting and run the `backend/` API on a server accessible to the clients.
 
-Required repository secrets (set these in the repository Settings → Secrets):
+## Next steps / To do
 
-- `FTP_SERVER` — FTP host (e.g. `ftp.example.com`)
-- `FTP_USERNAME` — FTP username
-- `FTP_PASSWORD` — FTP password
-- `FTP_REMOTE_PATH` — Remote path where `backend/` should be uploaded (e.g. `/www/site/backend`)
+- Finalize scoring algorithm details and document them in `/docs` (recommended).
+- Add admin UI pages for team management and progress approvals in `frontend-raw/src/app`.
+- Add tests for scoring rules in `backend/`.
 
-Optional:
+## Contributing
 
-- `FTP_PORT` — if your FTP server uses a non-standard port (configure the workflow to use this secret by uncommenting the `port:` line in the workflow file).
-
-Notes:
-
-- The workflow uses `SamKirkland/FTP-Deploy-Action` to perform the transfer. On push to `main`, it checks out the repo and uploads the local `backend/` directory to the configured `server-dir`.
-- If you prefer SFTP or another deploy method, I can change the workflow to use a different action.
+If you'd like help improving features or deployment, please open an issue or submit a PR. For quick local testing, update progress entries via the backend API and use the Angular dev server in `frontend-raw`.
