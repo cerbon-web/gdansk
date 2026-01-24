@@ -6,4 +6,6 @@
   "OK": "ОК: {{value}}",
   "ERROR": "Ошибка: {{value}}",
   "ERROR_TITLE": "Ошибка"
+  ,"QURAN_CONTEST": "Конкурс Корана"
+  ,"DAILY_CONTEST": "Ежедневный конкурс"
 }

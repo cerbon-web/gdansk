@@ -19,9 +19,12 @@
 <!-- Main app content only rendered after successful backend response -->
 <div *ngIf="!loading && initialized">
   <app-header></app-header>
-  <div style="text-align:center">
-    <h1>{{ 'TITLE' | translate }}</h1>
-    <p>{{ 'DESCRIPTION' | translate }}</p>
-    <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
-  </div>
+  <main class="main-actions" role="main" aria-label="Main actions">
+    <button class="big-action-button" aria-label="{{ 'QURAN_CONTEST' | translate }}">{{ 'QURAN_CONTEST' | translate }}</button>
+    <button class="big-action-button" aria-label="{{ 'DAILY_CONTEST' | translate }}">{{ 'DAILY_CONTEST' | translate }}</button>
+  </main>
 </div>
+
+<footer class="site-footer" *ngIf="createdAt">
+  © {{ createdYear }} — Created at {{ createdAt }}
+</footer>

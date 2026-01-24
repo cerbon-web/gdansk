@@ -6,4 +6,6 @@
   "OK": "Tamam: {{value}}",
   "ERROR": "Hata: {{value}}",
   "ERROR_TITLE": "Hata"
+  ,"QURAN_CONTEST": "Kuran Yarışması"
+  ,"DAILY_CONTEST": "Günlük Yarışma"
 }

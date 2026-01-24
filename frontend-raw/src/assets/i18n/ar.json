@@ -6,4 +6,6 @@
   "OK": "حسناً: {{value}}",
   "ERROR": "خطأ: {{value}}",
   "ERROR_TITLE": "خطأ"
+  ,"QURAN_CONTEST": "مسابقة القرآن"
+  ,"DAILY_CONTEST": "المسابقة اليومية"
 }

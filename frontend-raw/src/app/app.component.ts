@@ -19,6 +19,8 @@ export class AppComponent {
   errorMessage: string | null = null;
   private apiMessageSubject = new BehaviorSubject<string | null>(null);
   apiMessage$ = this.apiMessageSubject.asObservable();
+  createdAt: string | null = null;
+  createdYear: string | null = null;
 
   ngOnInit(): void {
     this.checkBackendConnectivity();
@@ -50,6 +52,17 @@ export class AppComponent {
         this.loading = false;
         this.initialized = true;
         this.translate.get('OK', { value: text }).subscribe((t: string) => this.apiMessageSubject.next(t));
+        // try to parse backend JSON and extract time/year
+        try {
+          const obj = JSON.parse(text);
+          if (obj && obj.time) {
+            this.createdAt = obj.time;
+            const d = new Date(obj.time);
+            if (!isNaN(d.getTime())) this.createdYear = String(d.getFullYear());
+          }
+        } catch (e) {
+          // not JSON — ignore
+        }
       },
       error: (err) => {
         console.error('API call failed', err);

@@ -41,3 +41,65 @@ button[disabled] {
 .error-box {
   color: #b91c1c;
 }
+
+.site-footer{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  font-size:12px;
+  color:#666;
+  text-align:center;
+  padding:6px 8px;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.04);
+  z-index: 999;
+}
+
+/* Main page large action buttons */
+.main-actions{
+  min-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.big-action-button{
+  min-width: 320px;
+  max-width: 80%;
+  padding: 20px 28px;
+  font-size: 32px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  background: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.25);
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.1;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  direction: rtl;
+}
+
+.big-action-button:hover{
+  transform: translateY(-3px);
+}
+
+@media (max-width: 480px){
+  .big-action-button{ font-size: 22px; padding: 16px 20px; min-width: 260px; }
+}
+
+/* Show buttons side-by-side on wider screens (laptops/tablets) */
+@media (min-width: 768px) {
+  .main-actions { flex-direction: row; align-items: center; justify-content: center; }
+  .big-action-button {
+    min-width: 260px;
+    max-width: 420px;
+    width: 44%;
+  }
+}
