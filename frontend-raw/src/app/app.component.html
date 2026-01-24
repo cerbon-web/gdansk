@@ -1,9 +1,27 @@
-<app-header></app-header>
-<div style="text-align:center">
-  <h1>{{ 'TITLE' | translate }}</h1>
-  <p>{{ 'DESCRIPTION' | translate }}</p>
-  <p>
-    <button (click)="callTest()">{{ 'CALL_API' | translate }}</button>
-  </p>
+<!-- Full-page loading shown while backend is being checked on startup -->
+<div *ngIf="loading" class="loading-overlay">
+  <div class="loading-box">
+    <span class="spinner" aria-hidden="true"></span>
+    <div style="margin-top:8px">{{ 'CALLING' | translate }}</div>
+    <div *ngIf="apiMessage$ | async as apiMessage" style="margin-top:8px">{{ apiMessage }}</div>
+  </div>
+</div>
+
+<!-- Error state when backend didn't respond -->
+<div *ngIf="!loading && !initialized" class="error-box" style="text-align:center;padding:24px;">
+  <h2>{{ 'ERROR' | translate }}</h2>
   <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
+  <p>
+    <button (click)="callTest()">{{ 'RETRY' | translate }}</button>
+  </p>
+</div>
+
+<!-- Main app content only rendered after successful backend response -->
+<div *ngIf="!loading && initialized">
+  <app-header></app-header>
+  <div style="text-align:center">
+    <h1>{{ 'TITLE' | translate }}</h1>
+    <p>{{ 'DESCRIPTION' | translate }}</p>
+    <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
+  </div>
 </div>

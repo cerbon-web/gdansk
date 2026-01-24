@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
@@ -14,8 +14,15 @@ import { HeaderComponent } from './header.component';
 })
 export class AppComponent {
   title = 'Frontend Raw';
+  loading = false;
+  initialized = false;
+  errorMessage: string | null = null;
   private apiMessageSubject = new BehaviorSubject<string | null>(null);
   apiMessage$ = this.apiMessageSubject.asObservable();
+
+  ngOnInit(): void {
+    this.callTest();
+  }
 
   constructor(private http: HttpClient, private translate: TranslateService) {
     // configure ngx-translate
@@ -31,17 +38,27 @@ export class AppComponent {
 
   callTest(): void {
     console.log('callTest invoked');
+    this.loading = true;
+    this.errorMessage = null;
     this.apiMessageSubject.next(this.translate.instant('CALLING'));
     this.http.get('https://api.cerbon.id/gdansk/test', { responseType: 'text' }).subscribe({
       next: (text: string) => {
         console.log('API success', text);
+        this.loading = false;
+        this.initialized = true;
         this.apiMessageSubject.next(this.translate.instant('OK', {0: text}));
       },
       error: (err) => {
         console.error('API call failed', err);
-        this.apiMessageSubject.next(this.translate.instant('ERROR', {0: err?.message ?? err}));
+        this.loading = false;
+        this.initialized = false;
+        this.errorMessage = this.translate.instant('ERROR', {0: err?.message ?? err});
+        this.apiMessageSubject.next(this.errorMessage);
       },
-      complete: () => console.log('API request completed')
+      complete: () => {
+        console.log('API request completed');
+        this.loading = false;
+      }
     });
   }
 }
