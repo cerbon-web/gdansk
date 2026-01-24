@@ -3,6 +3,7 @@
   "DESCRIPTION": "Minimalna aplikacja Angular 21 — build trafia do folderu frontend.",
   "CALL_API": "Wywołaj test API",
   "CALLING": "Wywoływanie...",
-  "OK": "OK: {{0}}",
-  "ERROR": "Błąd: {{0}}"
+  "OK": "OK: {{value}}",
+  "ERROR": "Błąd: {{value}}",
+  "ERROR_TITLE": "Błąd"
 }

@@ -9,10 +9,10 @@
 
 <!-- Error state when backend didn't respond -->
 <div *ngIf="!loading && !initialized" class="error-box" style="text-align:center;padding:24px;">
-  <h2>{{ 'ERROR' | translate }}</h2>
+  <h2>{{ 'ERROR_TITLE' | translate }}</h2>
   <p *ngIf="apiMessage$ | async as apiMessage">{{ apiMessage }}</p>
   <p>
-    <button (click)="callTest()">{{ 'RETRY' | translate }}</button>
+    <button (click)="checkBackendConnectivity()">{{ 'RETRY' | translate }}</button>
   </p>
 </div>
 

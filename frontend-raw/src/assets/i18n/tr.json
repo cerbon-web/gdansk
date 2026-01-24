@@ -3,6 +3,7 @@
   "DESCRIPTION": "Minimal Angular 21 uygulaması — derleme çıktıları frontend klasörüne gider.",
   "CALL_API": "API Testini Çağır",
   "CALLING": "Çağrılıyor...",
-  "OK": "Tamam: {{0}}",
-  "ERROR": "Hata: {{0}}"
+  "OK": "Tamam: {{value}}",
+  "ERROR": "Hata: {{value}}",
+  "ERROR_TITLE": "Hata"
 }

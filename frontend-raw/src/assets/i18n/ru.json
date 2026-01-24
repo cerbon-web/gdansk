@@ -3,6 +3,7 @@
   "DESCRIPTION": "Минимальное приложение Angular 21 — сборка в папку frontend.",
   "CALL_API": "Вызвать тест API",
   "CALLING": "Вызов...",
-  "OK": "ОК: {{0}}",
-  "ERROR": "Ошибка: {{0}}"
+  "OK": "ОК: {{value}}",
+  "ERROR": "Ошибка: {{value}}",
+  "ERROR_TITLE": "Ошибка"
 }
