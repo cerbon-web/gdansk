@@ -1,0 +1,23 @@
+<div class="modal-overlay" (click)="onCancel()">
+  <div class="modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-label="{{ 'LOGIN.TITLE' | translate }}">
+    <header class="modal-header">
+      <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+      <button class="close-btn" (click)="onCancel()" aria-label="{{ 'CLOSE' | translate }}">×</button>
+    </header>
+    <section class="modal-body">
+      <label>
+        {{ 'LOGIN.USERNAME' | translate }}
+        <input type="text" />
+      </label>
+      <label>
+        {{ 'LOGIN.PASSWORD' | translate }}
+        <input type="password" />
+      </label>
+      <div *ngIf="messageKey" class="error">{{ messageKey | translate }}</div>
+    </section>
+    <footer class="modal-footer">
+      <button (click)="onLogin()">{{ 'LOGIN.BUTTON' | translate }}</button>
+      <button (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
+    </footer>
+  </div>
+</div>

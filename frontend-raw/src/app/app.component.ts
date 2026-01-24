@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
+import { LoginComponent } from './login.component';
 import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -22,6 +23,7 @@ export class AppComponent {
   apiMessage$ = this.apiMessageSubject.asObservable();
   createdAt: string | null = null;
   createdYear: string | null = null;
+  showLogin = false;
 
   ngOnInit(): void {
     this.checkBackendConnectivity();
@@ -104,5 +106,13 @@ export class AppComponent {
         this.loading = false;
       }
     });
+  }
+
+  openLogin(): void {
+    this.showLogin = true;
+  }
+
+  onLoginClose(): void {
+    this.showLogin = false;
   }
 }

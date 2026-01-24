@@ -7,4 +7,13 @@
   ,"DAILY_CONTEST": "Günlük Yarışma"
   ,"TITLE": "Gdansk Camii Yarışması"
   ,"CREATED_AT": "Oluşturuldu"
+  ,"CLOSE": "Kapat"
+  ,"CANCEL": "İptal"
+  ,"LOGIN": {
+    "TITLE": "Giriş",
+    "USERNAME": "Kullanıcı adı",
+    "PASSWORD": "Parola",
+    "BUTTON": "Giriş",
+    "NOT_IMPLEMENTED": "Henüz uygulanmadı"
+  }
 }
