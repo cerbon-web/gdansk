@@ -1,11 +1,9 @@
 {
-  "TITLE": "Frontend Raw (PL)",
-  "DESCRIPTION": "Minimalna aplikacja Angular 21 — build trafia do folderu frontend.",
-  "CALL_API": "Wywołaj test API",
   "CALLING": "Wywoływanie...",
   "OK": "OK: {{value}}",
   "ERROR": "Błąd: {{value}}",
   "ERROR_TITLE": "Błąd"
   ,"QURAN_CONTEST": "Konkurs Koranu"
   ,"DAILY_CONTEST": "Konkurs codzienny"
+  ,"CREATED_AT": "Utworzono"
 }

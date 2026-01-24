@@ -1,11 +1,9 @@
 {
-  "TITLE": "واجهة أمامية",
-  "DESCRIPTION": "تطبيق Angular 21 بسيط — مخرجات البناء إلى مجلد frontend.",
-  "CALL_API": "استدعاء اختبار API",
   "CALLING": "جاري الاستدعاء...",
   "OK": "حسناً: {{value}}",
   "ERROR": "خطأ: {{value}}",
   "ERROR_TITLE": "خطأ"
   ,"QURAN_CONTEST": "مسابقة القرآن"
   ,"DAILY_CONTEST": "المسابقة اليومية"
+  ,"CREATED_AT": "تم الإنشاء في"
 }

@@ -1,11 +1,9 @@
 {
-  "TITLE": "Frontend Raw (TR)",
-  "DESCRIPTION": "Minimal Angular 21 uygulaması — derleme çıktıları frontend klasörüne gider.",
-  "CALL_API": "API Testini Çağır",
   "CALLING": "Çağrılıyor...",
   "OK": "Tamam: {{value}}",
   "ERROR": "Hata: {{value}}",
   "ERROR_TITLE": "Hata"
   ,"QURAN_CONTEST": "Kuran Yarışması"
   ,"DAILY_CONTEST": "Günlük Yarışma"
+  ,"CREATED_AT": "Oluşturuldu"
 }

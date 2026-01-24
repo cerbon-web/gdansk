@@ -21,7 +21,7 @@
   <app-header></app-header>
   <main class="main-actions" role="main" aria-label="Main actions">
     <button class="big-action-button" aria-label="{{ 'QURAN_CONTEST' | translate }}">
-      <img src="assets/icons/quran_mushaf_score.svg" class="icon" alt="">
+      <img src="assets/icons/quran_mushaf.png" class="icon raster" alt="Quran">
       <span class="btn-label">{{ 'QURAN_CONTEST' | translate }}</span>
     </button>
     <button class="big-action-button" aria-label="{{ 'DAILY_CONTEST' | translate }}">
@@ -32,5 +32,5 @@
 </div>
 
 <footer class="site-footer" *ngIf="createdAt">
-  © {{ createdYear }} — Created at {{ createdAt }}
+  © {{ createdYear }} — {{ 'CREATED_AT' | translate }} {{ createdAt }}
 </footer>

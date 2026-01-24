@@ -1,11 +1,9 @@
 {
-  "TITLE": "Frontend Raw (RU)",
-  "DESCRIPTION": "Минимальное приложение Angular 21 — сборка в папку frontend.",
-  "CALL_API": "Вызвать тест API",
   "CALLING": "Вызов...",
   "OK": "ОК: {{value}}",
   "ERROR": "Ошибка: {{value}}",
   "ERROR_TITLE": "Ошибка"
   ,"QURAN_CONTEST": "Конкурс Корана"
   ,"DAILY_CONTEST": "Ежедневный конкурс"
+  ,"CREATED_AT": "Создано"
 }

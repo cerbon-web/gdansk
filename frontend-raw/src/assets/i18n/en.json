@@ -1,11 +1,9 @@
 {
-  "TITLE": "Frontend Raw",
-  "DESCRIPTION": "A minimal Angular 21 app — build outputs to the sibling frontend folder.",
-  "CALL_API": "Call API Test",
   "CALLING": "Calling...",
   "OK": "OK: {{value}}",
   "ERROR": "Error: {{value}}",
   "ERROR_TITLE": "Error"
   ,"QURAN_CONTEST": "Quran Contest"
   ,"DAILY_CONTEST": "Daily Contest"
+  ,"CREATED_AT": "Created at"
 }

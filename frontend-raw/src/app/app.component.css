@@ -81,18 +81,29 @@ button[disabled] {
   box-shadow: 0 6px 20px rgba(2,6,23,0.25);
   cursor: pointer;
   display: flex;
+  flex-direction: column; /* icon above text */
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 22px;
   line-height: 1.1;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
   direction: rtl;
 }
 
 .big-action-button .icon{
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
+  width: 96px; /* larger default icon size */
+  height: 96px;
+  flex: 0 0 96px;
+}
+
+/* Raster-specific sizing so the provided image displays nicely */
+.big-action-button .icon.raster{
+  width: 112px; /* larger raster image size */
+  height: 112px;
+  flex: 0 0 112px;
+  object-fit: contain;
+  background: transparent;
+  border-radius: 6px;
 }
 
 .btn-label{
@@ -105,8 +116,10 @@ button[disabled] {
 
 @media (max-width: 480px){
   .big-action-button{ font-size: 22px; padding: 16px 20px; min-width: 260px; }
-  .big-action-button .icon{ width:36px; height:36px; flex:0 0 36px; }
-  .big-action-button{ min-height: 220px; }
+  /* Larger icons on mobile for better tap target and visibility */
+  .big-action-button .icon{ width:112px; height:112px; flex:0 0 112px; }
+  .big-action-button .icon.raster{ width:128px; height:128px; flex:0 0 128px; }
+  .big-action-button{ min-height: 340px; }
 }
 
 /* Show buttons side-by-side on wider screens (laptops/tablets) */
@@ -117,7 +130,10 @@ button[disabled] {
     min-width: 260px;
     max-width: 420px;
     width: 44%;
-    min-height: 320px; /* equal height for both buttons without filling viewport */
+    min-height: 420px; /* equal height for both buttons without filling viewport */
+    align-items: center; /* ensure column children centered */
+    padding-top: 28px; /* a bit more top padding so icon has space */
+    padding-bottom: 28px;
   }
 }
 
