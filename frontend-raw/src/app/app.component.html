@@ -2,7 +2,7 @@
 <div *ngIf="loading" class="loading-overlay">
   <div class="loading-box">
     <span class="spinner" aria-hidden="true"></span>
-    <div style="margin-top:8px">{{ 'CALLING' | translate }}</div>
+    <div style="margin-top:8px">{{ 'LOADING' | translate }}</div>
     <div *ngIf="apiMessage$ | async as apiMessage" style="margin-top:8px">{{ apiMessage }}</div>
   </div>
 </div>

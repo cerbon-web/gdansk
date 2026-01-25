@@ -1,5 +1,5 @@
 {
-  "CALLING": "Wywoływanie...",
+  "LOADING": "Ładowanie...",
   "OK": "OK: {{value}}",
   "ERROR": "Błąd: {{value}}",
   "ERROR_TITLE": "Błąd"

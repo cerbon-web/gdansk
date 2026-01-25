@@ -1,5 +1,5 @@
 {
-  "CALLING": "Calling...",
+  "LOADING": "Loading",
   "OK": "OK: {{value}}",
   "ERROR": "Error: {{value}}",
   "ERROR_TITLE": "Error"

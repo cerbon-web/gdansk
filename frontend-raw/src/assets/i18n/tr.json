@@ -1,5 +1,5 @@
 {
-  "CALLING": "Çağrılıyor...",
+  "LOADING": "Yükleniyor...",
   "OK": "Tamam: {{value}}",
   "ERROR": "Hata: {{value}}",
   "ERROR_TITLE": "Hata"
