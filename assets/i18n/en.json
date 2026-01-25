@@ -1,0 +1,19 @@
+{
+  "LOADING": "Loading",
+  "OK": "OK: {{value}}",
+  "ERROR": "Error: {{value}}",
+  "ERROR_TITLE": "Error"
+  ,"QURAN_CONTEST": "Quran Contest"
+  ,"DAILY_CONTEST": "Daily Contest"
+  ,"TITLE": "Gdansk Mosque Contest"
+  ,"CREATED_AT": "Created at"
+  ,"CLOSE": "Close"
+  ,"CANCEL": "Cancel"
+  ,"LOGIN": {
+    "TITLE": "Login",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "BUTTON": "Login",
+    "NOT_IMPLEMENTED": "Not implemented yet"
+  }
+}

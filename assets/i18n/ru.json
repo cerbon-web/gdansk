@@ -1,0 +1,19 @@
+{
+  "LOADING": "Загрузка...",
+  "OK": "ОК: {{value}}",
+  "ERROR": "Ошибка: {{value}}",
+  "ERROR_TITLE": "Ошибка"
+  ,"QURAN_CONTEST": "Конкурс Корана"
+  ,"DAILY_CONTEST": "Ежедневный конкурс"
+  ,"TITLE": "Конкурс мечети Гданьска"
+  ,"CREATED_AT": "Создано"
+  ,"CLOSE": "Закрыть"
+  ,"CANCEL": "Отмена"
+  ,"LOGIN": {
+    "TITLE": "Вход",
+    "USERNAME": "Имя пользователя",
+    "PASSWORD": "Пароль",
+    "BUTTON": "Войти",
+    "NOT_IMPLEMENTED": "Еще не реализовано"
+  }
+}

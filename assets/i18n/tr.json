@@ -1,0 +1,19 @@
+{
+  "LOADING": "Yükleniyor...",
+  "OK": "Tamam: {{value}}",
+  "ERROR": "Hata: {{value}}",
+  "ERROR_TITLE": "Hata"
+  ,"QURAN_CONTEST": "Kuran Yarışması"
+  ,"DAILY_CONTEST": "Günlük Yarışma"
+  ,"TITLE": "Gdansk Camii Yarışması"
+  ,"CREATED_AT": "Oluşturuldu"
+  ,"CLOSE": "Kapat"
+  ,"CANCEL": "İptal"
+  ,"LOGIN": {
+    "TITLE": "Giriş",
+    "USERNAME": "Kullanıcı adı",
+    "PASSWORD": "Parola",
+    "BUTTON": "Giriş",
+    "NOT_IMPLEMENTED": "Henüz uygulanmadı"
+  }
+}
