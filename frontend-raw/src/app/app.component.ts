@@ -100,9 +100,25 @@ export class AppComponent {
         console.error('API call failed', err);
         this.loading = false;
         this.initialized = false;
-        this.translate.get('ERROR', { value: err?.message ?? err }).subscribe((t: string) => {
-          this.errorMessage = t;
-          this.apiMessageSubject.next(t);
+        // Create a readable error string (avoid displaying [object Object])
+        let rawMsg: string;
+        try {
+          if (err && typeof err === 'object') {
+            if ((err as any).message) rawMsg = String((err as any).message);
+            else if ((err as any).statusText) rawMsg = String((err as any).statusText);
+            else if ((err as any).error) rawMsg = typeof (err as any).error === 'string' ? (err as any).error : JSON.stringify((err as any).error);
+            else rawMsg = JSON.stringify(err);
+          } else {
+            rawMsg = String(err);
+          }
+        } catch (e) {
+          rawMsg = String(err);
+        }
+        this.translate.get('ERROR', { value: rawMsg }).subscribe((t: any) => {
+          // translations may accidentally be objects (duplicate keys); fall back to raw message
+          const display = (typeof t === 'string') ? t : rawMsg;
+          this.errorMessage = display;
+          this.apiMessageSubject.next(display);
         });
       },
       complete: () => {

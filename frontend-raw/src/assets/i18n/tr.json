@@ -17,7 +17,20 @@
     "NOT_IMPLEMENTED": "Henüz uygulanmadı",
     "INVALID": "Geçersiz kullanıcı adı veya parola",
     "REQUIRED": "Kullanıcı adı ve parola gerekli"
-    ,"FORBIDDEN": "Yasak"
+     "FORBIDDEN": "Yasaklı"
+    },
+    "SIGNUP": {
+      "TITLE": "Kayıt Ol",
+      "USERNAME": "Kullanıcı adı",
+      "PASSWORD": "Parola",
+      "PASSWORD_CONFIRM": "Parolayı doğrula",
+      "NAME": "İsim",
+      "PHONE": "Telefon",
+      "BUTTON": "Kayıt Ol"
+    },
+    "REGISTER": {
+      "REQUIRED": "Kullanıcı adı ve parola gerekli",
+      "EXISTS": "Kullanıcı adı zaten mevcut"
   }
   ,"LOGOUT": "Çıkış"
   ,"SUPER": {

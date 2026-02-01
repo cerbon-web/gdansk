@@ -280,6 +280,38 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// Register endpoint
+router.post('/register', async (req, res) => {
+    const { username, password, name, phone } = req.body || {};
+    if (!username || !password) return res.status(400).json({ error: 'REGISTER.REQUIRED' });
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        // check existing username
+        const [existing] = await pool.query('SELECT id FROM users WHERE username = ?', [username]);
+        if (existing && existing.length) return res.status(409).json({ error: 'REGISTER.EXISTS' });
+        // insert new user with default role 'contester'
+        await pool.query('INSERT INTO users (username, password, roles, name, phone) VALUES (?, ?, ?, ?, ?)', [username, password, 'contester', name || null, phone || null]);
+        // fetch inserted user
+        const [rows] = await pool.query('SELECT username, roles FROM users WHERE username = ?', [username]);
+        const user = rows && rows[0];
+        if (!user) return res.status(500).json({ error: 'ERROR.INTERNAL' });
+        const roles = user.roles ? String(user.roles).split(',').map((r) => r.trim()).filter(Boolean) : ['contester'];
+        try {
+            const iat = Math.floor(Date.now() / 1000);
+            const exp = iat + 60 * 60 * 24; // 24h
+            const token = signJwt({ username: user.username, roles, iat, exp }, JWT_SECRET);
+            return res.json({ username: user.username, roles, token });
+        } catch (e) {
+            console.error('Failed to sign JWT (register)', e);
+            return res.status(500).json({ error: 'ERROR.INTERNAL' });
+        }
+    } catch (e) {
+        console.error('Register error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
 router.get('/test', (req, res) => {
     res.json({
         time: new Date().toISOString(),

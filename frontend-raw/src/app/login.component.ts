@@ -21,14 +21,27 @@ export class LoginComponent {
   serverError$ = this.serverErrorSubject.asObservable();
   username = '';
   password = '';
+  loading = false;
+  // signup fields
+  activeTab: 'login' | 'signup' = 'login';
+  signupUsername = '';
+  signupPassword = '';
+  signupPassword2 = '';
+  signupName = '';
+  signupPhone = '';
+  signupLoading = false;
+  signupError: string | null = null;
   constructor(private auth: AuthService, private router: Router) {}
 
   onLogin(): void {
     this.messageKeySubject.next(null);
     this.serverErrorSubject.next(null);
+    this.loading = true;
     this.auth.login(this.username, this.password).then(() => {
+      this.loading = false;
       this.doClose();
     }).catch((err: any) => {
+      this.loading = false;
       const m = err && err.message ? String(err.message) : null;
       if (!m) {
         this.serverErrorSubject.next('Unknown error');
@@ -45,7 +58,29 @@ export class LoginComponent {
   }
 
   onCancel(): void {
+    if (this.loading) return;
     this.doClose();
+  }
+
+  submitSignup(): void {
+    this.signupError = null;
+    if (!this.signupUsername || !this.signupPassword || !this.signupPassword2) {
+      this.signupError = 'Please fill required fields';
+      return;
+    }
+    if (this.signupPassword !== this.signupPassword2) {
+      this.signupError = 'Passwords do not match';
+      return;
+    }
+    this.signupLoading = true;
+    this.auth.register(this.signupUsername, this.signupPassword, this.signupName, this.signupPhone).then(() => {
+      this.signupLoading = false;
+      this.doClose();
+    }).catch((err: any) => {
+      this.signupLoading = false;
+      const m = err && err.message ? String(err.message) : 'Registration failed';
+      this.signupError = m;
+    });
   }
 
   private doClose(): void {

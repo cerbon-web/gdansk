@@ -19,6 +19,20 @@
     "REQUIRED": "Nazwa użytkownika i hasło są wymagane"
     ,"FORBIDDEN": "Brak dostępu"
   }
+  ,"SIGNUP": {
+    "TITLE": "Zarejestruj się",
+    "USERNAME": "Nazwa użytkownika",
+    "PASSWORD": "Hasło",
+    "PASSWORD_CONFIRM": "Powtórz hasło",
+    "NAME": "Imię i nazwisko",
+    "PHONE": "Numer telefonu",
+    "BUTTON": "Zarejestruj"
+  }
+  ,"REGISTER": {
+    "REQUIRED": "Nazwa użytkownika i hasło są wymagane",
+    "EXISTS": "Użytkownik o tej nazwie już istnieje"
+  }
+  }
   ,"LOGOUT": "Wyloguj"
   ,"SUPER": {
     "USERS_LIST": "Lista użytkowników",

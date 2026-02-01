@@ -20,6 +20,19 @@
     "FORBIDDEN": "Forbidden"
   }
   ,"LOGOUT": "Logout"
+    ,"SIGNUP": {
+      "TITLE": "Sign up",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "PASSWORD_CONFIRM": "Confirm password",
+      "NAME": "Name",
+      "PHONE": "Phone number",
+      "BUTTON": "Sign up"
+    }
+    ,"REGISTER": {
+      "REQUIRED": "Username and password required",
+      "EXISTS": "Username already exists"
+    }
   ,"SUPER": {
     "USERS_LIST": "Users list",
     "OTHER": "Other",

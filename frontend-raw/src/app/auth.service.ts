@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 export type Role = 'contester' | 'supervisor' | 'guest' | 'super';
 
@@ -19,7 +20,7 @@ export class AuthService {
 
   private readonly STORAGE_KEY = 'auth_session';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private translate: TranslateService) {
     // try to restore session from localStorage
     try {
       const raw = localStorage.getItem(this.STORAGE_KEY);
@@ -59,6 +60,33 @@ export class AuthService {
         return Promise.reject(new Error(String(msg)));
       } catch (_) {
         return Promise.reject(new Error('Invalid username or password'));
+      }
+    }
+  }
+
+  // Register a new user. On success behave like login: persist session and roles if returned.
+  async register(username: string, password: string, name?: string, phone?: string): Promise<void> {
+    const url = 'https://api.cerbon.id/islam.gdansk/register';
+    try {
+      const resp: any = await this.http.post(url, { username, password, name, phone }).toPromise();
+      const roles: Role[] = Array.isArray(resp.roles) ? resp.roles : (resp.roles ? String(resp.roles).split(',').map((r: string) => r.trim()) : ['contester']);
+      this.authenticatedSubject.next(true);
+      this.rolesSubject.next(roles as Role[]);
+      const token = resp && resp.token ? String(resp.token) : undefined;
+      if (token) this._token = token;
+      this._persistSession(true, roles as Role[], username, token);
+      return;
+    } catch (e) {
+      try {
+        const err: any = e as any;
+        const rawMsg = err?.error?.error || err?.message || 'Registration failed';
+        // If backend returned a translation key (e.g. LOGIN.INVALID), use it; otherwise format via generic ERROR translation
+        const isKey = /^[A-Z0-9_\.]+$/.test(String(rawMsg)) && String(rawMsg).indexOf('.') >= 0;
+        const display = isKey ? this.translate.instant(String(rawMsg)) : this.translate.instant('ERROR', { value: String(rawMsg) });
+        return Promise.reject(new Error(String(display)));
+      } catch (_) {
+        const fallback = this.translate.instant('ERROR', { value: 'Registration failed' });
+        return Promise.reject(new Error(String(fallback)));
       }
     }
   }

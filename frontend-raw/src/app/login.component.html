@@ -1,27 +1,62 @@
 <div class="modal-overlay" (click)="onCancel()">
   <div class="modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-label="{{ 'LOGIN.TITLE' | translate }}">
     <header class="modal-header">
-      <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+      <nav class="tabs">
+        <button [class.active]="activeTab==='login'" (click)="activeTab='login'">{{ 'LOGIN.TITLE' | translate }}</button>
+        <button [class.active]="activeTab==='signup'" (click)="activeTab='signup'">{{ 'SIGNUP.TITLE' | translate }}</button>
+      </nav>
       <button class="close-btn" (click)="onCancel()" aria-label="{{ 'CLOSE' | translate }}">×</button>
     </header>
     <section class="modal-body">
-      <label>
-        {{ 'LOGIN.USERNAME' | translate }}
-        <input type="text" [(ngModel)]="username" />
-      </label>
-      <label>
-        {{ 'LOGIN.PASSWORD' | translate }}
-        <input type="password" [(ngModel)]="password" />
-      </label>
-      <div *ngIf="(serverError$ | async) as srv" class="error">{{ srv }}</div>
-      <div *ngIf="(messageKey$ | async) as mk">
-        <div *ngIf="!((serverError$ | async) !== null)" class="error">{{ mk | translate }}</div>
+      <div *ngIf="activeTab === 'login'">
+        <label>
+          {{ 'LOGIN.USERNAME' | translate }}
+          <input type="text" [(ngModel)]="username" [disabled]="loading" />
+        </label>
+        <label>
+          {{ 'LOGIN.PASSWORD' | translate }}
+          <input type="password" [(ngModel)]="password" [disabled]="loading" />
+        </label>
+        <div *ngIf="(serverError$ | async) as srv" class="error">{{ srv }}</div>
+        <div *ngIf="(messageKey$ | async) as mk">
+          <div *ngIf="!((serverError$ | async) !== null)" class="error">{{ mk | translate }}</div>
+        </div>
       </div>
-      
+
+      <div *ngIf="activeTab === 'signup'">
+        <label>
+          {{ 'SIGNUP.USERNAME' | translate }}
+          <input type="text" [(ngModel)]="signupUsername" [disabled]="signupLoading" />
+        </label>
+        <label>
+          {{ 'SIGNUP.PASSWORD' | translate }}
+          <input type="password" [(ngModel)]="signupPassword" [disabled]="signupLoading" />
+        </label>
+        <label>
+          {{ 'SIGNUP.PASSWORD_CONFIRM' | translate }}
+          <input type="password" [(ngModel)]="signupPassword2" [disabled]="signupLoading" />
+        </label>
+        <label>
+          {{ 'SIGNUP.NAME' | translate }}
+          <input type="text" [(ngModel)]="signupName" [disabled]="signupLoading" />
+        </label>
+        <label>
+          {{ 'SIGNUP.PHONE' | translate }}
+          <input type="tel" [(ngModel)]="signupPhone" [disabled]="signupLoading" />
+        </label>
+        <div *ngIf="signupError" class="error">{{ signupError }}</div>
+      </div>
     </section>
     <footer class="modal-footer">
-      <button type="button" (click)="onLogin()">{{ 'LOGIN.BUTTON' | translate }}</button>
-      <button type="button" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
+      <button *ngIf="activeTab === 'login'" type="button" (click)="onLogin()" [disabled]="loading">
+        <span *ngIf="!loading">{{ 'LOGIN.BUTTON' | translate }}</span>
+        <span *ngIf="loading" class="loading-inline">{{ 'LOADING' | translate }}</span>
+      </button>
+      <button *ngIf="activeTab === 'signup'" type="button" (click)="submitSignup()" [disabled]="signupLoading">
+        <span *ngIf="!signupLoading">{{ 'SIGNUP.BUTTON' | translate }}</span>
+        <span *ngIf="signupLoading" class="loading-inline">{{ 'LOADING' | translate }}</span>
+      </button>
+      <button type="button" (click)="onCancel()" [disabled]="loading || signupLoading">{{ 'CANCEL' | translate }}</button>
     </footer>
   </div>
 </div>
