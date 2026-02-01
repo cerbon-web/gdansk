@@ -5,6 +5,35 @@ const mysql = require('mysql2/promise');
 
 const app = express();
 
+// Simple file logger: append console output to backend.log next to this file
+try {
+    const LOG_PATH = path.join(__dirname, 'backend.log');
+    const logStream = fs.createWriteStream(LOG_PATH, { flags: 'a' });
+    const origLog = console.log.bind(console);
+    const origError = console.error.bind(console);
+
+    function serializeArgs(args) {
+        return args.map(a => {
+            if (typeof a === 'string') return a;
+            try { return JSON.stringify(a); } catch (e) { return String(a); }
+        }).join(' ');
+    }
+
+    console.log = (...args) => {
+        try { logStream.write(new Date().toISOString() + ' [LOG] ' + serializeArgs(args) + '\n'); } catch (e) { /* ignore */ }
+        origLog(...args);
+    };
+    console.error = (...args) => {
+        try { logStream.write(new Date().toISOString() + ' [ERR] ' + serializeArgs(args) + '\n'); } catch (e) { /* ignore */ }
+        origError(...args);
+    };
+
+    process.on('exit', () => { try { logStream.end(); } catch (e) {} });
+    process.on('uncaughtException', (err) => { try { console.error('uncaughtException', err); } finally { process.exit(1); } });
+} catch (e) {
+    // if logging setup fails, continue without file logging
+}
+
 // Database files (use the specific required database name)
 const DB_NAME = 'rnwhnxpk_cerbon';
 const SCHEMA_FILE = path.join(__dirname, 'schema.sql');
