@@ -15,5 +15,11 @@
     <button class="flag-btn" title="Arabic" (click)="switch('ar')">
       <img class="flag-img" src="assets/flags/ar.svg" alt="Arabic"/>
     </button>
+    <button *ngIf="isSuper" class="super-btn" title="Superpanel" (click)="superClicked.emit()" aria-label="Superpanel">
+      <span class="super-ico">⚡</span>
+    </button>
+    <button *ngIf="(auth.isAuthenticated$ | async)" class="logout-btn" (click)="logout()" title="Logout" aria-label="Logout">
+      {{ 'LOGOUT' | translate }}
+    </button>
   </nav>
 </div>

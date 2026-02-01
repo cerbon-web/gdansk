@@ -14,6 +14,13 @@
     "USERNAME": "Username",
     "PASSWORD": "Password",
     "BUTTON": "Login",
-    "NOT_IMPLEMENTED": "Not implemented yet"
+    "NOT_IMPLEMENTED": "Not implemented yet",
+    "INVALID": "Invalid username or password"
+  }
+  ,"LOGOUT": "Logout"
+  ,"SUPER": {
+    "USERS_LIST": "Users list",
+    "OTHER": "Other",
+    "DESCRIPTION": "Developer super admin panel"
   }
 }

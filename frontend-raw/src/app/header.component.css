@@ -7,6 +7,13 @@
 .flag-btn{padding:4px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer;display:inline-flex;align-items:center}
 .flag-btn:hover{transform:translateY(-2px)}
 .flag-img{width:28px;height:20px;display:block}
+/* super button */
+.super-btn{width:30px;height:30px;border-radius:50%;background:#ff3b30;color:white;border:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.super-btn:hover{transform:translateY(-2px);box-shadow:0 2px 6px rgba(0,0,0,0.2)}
+.super-ico{font-size:14px;line-height:1}
+/* logout button */
+.logout-btn{padding:6px 8px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer;margin-left:8px}
+.logout-btn:hover{background:#f6f6f6}
 @media (max-width: 480px) {
 	.flag-bar{gap:6px}
 	.flag-btn{padding:2px;border-radius:6px}

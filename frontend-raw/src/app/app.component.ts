@@ -5,12 +5,13 @@ import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
+import { SuperComponent } from './super.component';
 import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -24,6 +25,7 @@ export class AppComponent {
   createdAt: string | null = null;
   createdYear: string | null = null;
   showLogin = false;
+  showSuper = false;
 
   ngOnInit(): void {
     this.checkBackendConnectivity();
@@ -110,6 +112,14 @@ export class AppComponent {
 
   openLogin(): void {
     this.showLogin = true;
+  }
+
+  openSuper(): void {
+    this.showSuper = true;
+  }
+
+  closeSuper(): void {
+    this.showSuper = false;
   }
 
   onLoginClose(): void {

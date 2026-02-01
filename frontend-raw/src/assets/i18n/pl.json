@@ -14,6 +14,13 @@
     "USERNAME": "Nazwa użytkownika",
     "PASSWORD": "Hasło",
     "BUTTON": "Zaloguj",
-    "NOT_IMPLEMENTED": "Jeszcze nie zaimplementowano"
+    "NOT_IMPLEMENTED": "Jeszcze nie zaimplementowano",
+    "INVALID": "Nieprawidłowa nazwa użytkownika lub hasło"
+  }
+  ,"LOGOUT": "Wyloguj"
+  ,"SUPER": {
+    "USERS_LIST": "Lista użytkowników",
+    "OTHER": "Inne",
+    "DESCRIPTION": "Panel super administratora dla dewelopera"
   }
 }

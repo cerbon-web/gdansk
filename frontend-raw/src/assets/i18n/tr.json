@@ -14,6 +14,13 @@
     "USERNAME": "Kullanıcı adı",
     "PASSWORD": "Parola",
     "BUTTON": "Giriş",
-    "NOT_IMPLEMENTED": "Henüz uygulanmadı"
+    "NOT_IMPLEMENTED": "Henüz uygulanmadı",
+    "INVALID": "Geçersiz kullanıcı adı veya parola"
+  }
+  ,"LOGOUT": "Çıkış"
+  ,"SUPER": {
+    "USERS_LIST": "Kullanıcı listesi",
+    "OTHER": "Diğer",
+    "DESCRIPTION": "Geliştirici süper yönetici paneli"
   }
 }
