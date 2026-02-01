@@ -320,7 +320,7 @@ router.get('/test', (req, res) => {
 });
 
 // Protected sample endpoint: list users (no passwords)
-router.get('/users', authMiddleware(['supervisor']), async (req, res) => {
+router.get('/users', authMiddleware(['super']), async (req, res) => {
     try {
         const pool = req.app.locals.db;
         if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
