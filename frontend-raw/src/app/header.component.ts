@@ -33,6 +33,10 @@ export class HeaderComponent {
     // navigate to the routed login page instead of opening the modal
     try { this.router.navigate(['login']); } catch {  }
   }
+  
+    openSignup(): void {
+      try { this.router.navigate(['login'], { queryParams: { tab: 'signup' } }); } catch { }
+    }
 
   switch(lang: string) {
     // persist selection

@@ -1,15 +1,16 @@
 {
   "LOADING": "Loading",
   "OK": "OK: {{value}}",
-  "ERROR": "Error: {{value}}",
-  "ERROR_TITLE": "Error"
-  ,"QURAN_CONTEST": "Quran Contest"
-  ,"DAILY_CONTEST": "Daily Contest"
-  ,"TITLE": "Gdansk Mosque Contest"
-  ,"CREATED_AT": "Created at"
-  ,"CLOSE": "Close"
-  ,"CANCEL": "Cancel"
-  ,"LOGIN": {
+  "ERROR_TITLE": "Error",
+
+  "QURAN_CONTEST": "Quran Contest",
+  "DAILY_CONTEST": "Daily Contest",
+  "TITLE": "Gdansk Mosque Contest",
+  "CREATED_AT": "Created at",
+  "CLOSE": "Close",
+  "CANCEL": "Cancel",
+
+  "LOGIN": {
     "TITLE": "Login",
     "USERNAME": "Username",
     "PASSWORD": "Password",
@@ -18,36 +19,46 @@
     "INVALID": "Invalid username or password",
     "REQUIRED": "Username and password required",
     "FORBIDDEN": "Forbidden"
-  }
-  ,"LOGOUT": "Logout"
-    ,"SIGNUP": {
-      "TITLE": "Sign up",
-      "USERNAME": "Username",
-      "PASSWORD": "Password",
-      "PASSWORD_CONFIRM": "Confirm password",
-      "NAME": "Name",
-      "PHONE": "Phone number",
-      "BUTTON": "Sign up"
-    }
-    ,"REGISTER": {
-      "REQUIRED": "Username and password required",
-      "EXISTS": "Username already exists"
-    }
-  ,"SUPER": {
+  },
+
+  "LOGOUT": "Logout",
+
+  "SIGNUP": {
+    "TITLE": "Sign up",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "PASSWORD_CONFIRM": "Confirm password",
+    "NAME": "Name",
+    "PHONE": "Phone number",
+    "BUTTON": "Sign up"
+  },
+
+  "REGISTER": {
+    "REQUIRED": "Username and password required",
+    "EXISTS": "Username already exists"
+    ,"FAILED": "Registration failed, please try again later"
+  },
+
+  "SUPER": {
     "USERS_LIST": "Users list",
     "OTHER": "Other",
     "DESCRIPTION": "Super admin panel"
-  }
-  ,"BACK": "Back"
-  ,"USERS": {
+  },
+
+  "BACK": "Back",
+
+  "USERS": {
     "USERNAME": "Username",
     "ROLES": "Roles",
     "CREATED_AT": "Created at",
     "NO_USERS": "No users found"
-  }
-  ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",
+  },
+
+  "QURAN_DRAFT_INTRO": "Quran contest (draft page)",
   "DAILY_DRAFT_INTRO": "Daily contest (draft page)",
+
   "INTERNAL": "Internal server error",
+
   "ERROR": {
     "INTERNAL": "Internal server error",
     "DB_NOT_READY": "Database not ready"

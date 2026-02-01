@@ -16,6 +16,9 @@
 .logout-btn:hover{background:#f6f6f6}
 .login-btn{padding:6px 8px;border-radius:6px;border:1px solid #2b7cff;background:#2b7cff;color:white;cursor:pointer;margin-left:8px}
 .login-btn:hover{filter:brightness(.95)}
+/* signup button: white with primary colored border/text */
+.signup-btn{padding:6px 8px;border-radius:6px;border:1px solid #2b7cff;background:white;color:#2b7cff;cursor:pointer;margin-left:8px}
+.signup-btn:hover{background:#f6faff}
 @media (max-width: 480px) {
 	.flag-bar{gap:6px}
 	.flag-btn{padding:2px;border-radius:6px}

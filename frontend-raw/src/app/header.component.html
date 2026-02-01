@@ -18,6 +18,9 @@
     <button *ngIf="(auth.isAuthenticated$ | async)" class="logout-btn" (click)="logout()" title="Logout" aria-label="Logout">
       {{ 'LOGOUT' | translate }}
     </button>
+    <button *ngIf="!(auth.isAuthenticated$ | async)" class="signup-btn" (click)="openSignup()" title="Sign up" aria-label="Sign up">
+      {{ 'SIGNUP.TITLE' | translate }}
+    </button>
     <button *ngIf="!(auth.isAuthenticated$ | async)" class="login-btn" (click)="openLogin()" title="Login" aria-label="Login">
       {{ 'LOGIN.BUTTON' | translate }}
     </button>

@@ -26,25 +26,25 @@
       <div *ngIf="activeTab === 'signup'">
         <label>
           {{ 'SIGNUP.USERNAME' | translate }}
-          <input type="text" [(ngModel)]="signupUsername" [disabled]="signupLoading" />
+          <input type="text" [(ngModel)]="signupUsername" [disabled]="(signupLoading$ | async)" />
         </label>
         <label>
           {{ 'SIGNUP.PASSWORD' | translate }}
-          <input type="password" [(ngModel)]="signupPassword" [disabled]="signupLoading" />
+          <input type="password" [(ngModel)]="signupPassword" [disabled]="(signupLoading$ | async)" />
         </label>
         <label>
           {{ 'SIGNUP.PASSWORD_CONFIRM' | translate }}
-          <input type="password" [(ngModel)]="signupPassword2" [disabled]="signupLoading" />
+          <input type="password" [(ngModel)]="signupPassword2" [disabled]="(signupLoading$ | async)" />
         </label>
         <label>
           {{ 'SIGNUP.NAME' | translate }}
-          <input type="text" [(ngModel)]="signupName" [disabled]="signupLoading" />
+          <input type="text" [(ngModel)]="signupName" [disabled]="(signupLoading$ | async)" />
         </label>
         <label>
           {{ 'SIGNUP.PHONE' | translate }}
-          <input type="tel" [(ngModel)]="signupPhone" [disabled]="signupLoading" />
+          <input type="tel" [(ngModel)]="signupPhone" [disabled]="(signupLoading$ | async)" />
         </label>
-        <div *ngIf="signupError" class="error">{{ signupError }}</div>
+        <div *ngIf="(signupError$ | async) as se" class="error">{{ se }}</div>
       </div>
     </section>
     <footer class="modal-footer">
@@ -52,11 +52,11 @@
         <span *ngIf="!loading">{{ 'LOGIN.BUTTON' | translate }}</span>
         <span *ngIf="loading" class="loading-inline">{{ 'LOADING' | translate }}</span>
       </button>
-      <button *ngIf="activeTab === 'signup'" type="button" (click)="submitSignup()" [disabled]="signupLoading">
-        <span *ngIf="!signupLoading">{{ 'SIGNUP.BUTTON' | translate }}</span>
-        <span *ngIf="signupLoading" class="loading-inline">{{ 'LOADING' | translate }}</span>
+      <button *ngIf="activeTab === 'signup'" type="button" (click)="submitSignup()" [disabled]="(signupLoading$ | async)">
+        <span *ngIf="!(signupLoading$ | async)">{{ 'SIGNUP.BUTTON' | translate }}</span>
+        <span *ngIf="(signupLoading$ | async)" class="loading-inline">{{ 'LOADING' | translate }}</span>
       </button>
-      <button type="button" (click)="onCancel()" [disabled]="loading || signupLoading">{{ 'CANCEL' | translate }}</button>
+      <button type="button" (click)="onCancel()" [disabled]="loading || (signupLoading$ | async)">{{ 'CANCEL' | translate }}</button>
     </footer>
   </div>
 </div>

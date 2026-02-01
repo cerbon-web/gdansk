@@ -80,13 +80,19 @@ export class AuthService {
       try {
         const err: any = e as any;
         const rawMsg = err?.error?.error || err?.message || 'Registration failed';
-        // If backend returned a translation key (e.g. LOGIN.INVALID), use it; otherwise format via generic ERROR translation
         const isKey = /^[A-Z0-9_\.]+$/.test(String(rawMsg)) && String(rawMsg).indexOf('.') >= 0;
-        const display = isKey ? this.translate.instant(String(rawMsg)) : this.translate.instant('ERROR', { value: String(rawMsg) });
-        return Promise.reject(new Error(String(display)));
+        if (isKey) {
+          // translate the specific server key (e.g. REGISTER.EXISTS)
+          const translated = this.translate.instant(String(rawMsg));
+          const display = typeof translated === 'string' ? translated : String(rawMsg);
+          return Promise.reject(new Error(display));
+        }
+        // Generic fallback: show a user-friendly registration-failed message
+        const fallback = this.translate.instant('REGISTER.FAILED');
+        return Promise.reject(new Error(typeof fallback === 'string' ? fallback : 'Registration failed'));
       } catch (_) {
-        const fallback = this.translate.instant('ERROR', { value: 'Registration failed' });
-        return Promise.reject(new Error(String(fallback)));
+        const fallback = this.translate.instant('REGISTER.FAILED');
+        return Promise.reject(new Error(typeof fallback === 'string' ? fallback : 'Registration failed'));
       }
     }
   }
