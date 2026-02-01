@@ -4,7 +4,41 @@
     <h2>{{ 'DAILY_CONTEST' | translate }}</h2>
   </header>
   <section class="system-body">
-    <p>{{ 'DAILY_DRAFT_INTRO' | translate }}</p>
-    <p>This is a placeholder page for daily contest functionality.</p>
+    <!-- Supervisor view -->
+    <div *ngIf="isSupervisor">
+      <h3>Supervisor: control</h3>
+      <p>Active: <strong>{{ statusActive ? 'Yes' : 'No' }}</strong></p>
+      <label>Questions (JSON array):</label>
+      <textarea rows="6" cols="60" [(ngModel)]="supervisorQuestionsRaw"></textarea>
+      <div style="margin-top:8px">
+        <button (click)="startParticipation()">Start participating</button>
+        <button (click)="stopParticipation()">Stop</button>
+      </div>
+    </div>
+
+    <!-- Contester view -->
+    <div *ngIf="!isSupervisor">
+      <h3>Daily Contest</h3>
+      <p *ngIf="!statusActive">Daily contest is not active right now. Please wait for supervisor to start.</p>
+      <div *ngIf="statusActive && !questions">
+        <p>Daily contest is active. Click the button to fetch questions and start your countdown ({{ duration }}s).</p>
+        <button (click)="fetchQuestions()">Fetch Questions & Start</button>
+      </div>
+
+      <div *ngIf="questions">
+        <p>Time left: <strong>{{ countdown }}s</strong></p>
+        <form (ngSubmit)="submitAnswers()">
+          <div *ngFor="let q of questions; let i = index" style="margin-bottom:12px">
+            <label>Q{{ i + 1 }}: {{ q.text || q.question || ('Question ' + (i+1)) }}</label>
+            <div>
+              <textarea rows="3" cols="60" [(ngModel)]="answers[i]" name="a{{i}}"></textarea>
+            </div>
+          </div>
+          <div>
+            <button type="button" (click)="submitAnswers()" [disabled]="countdown <= 0">Submit Answers</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </section>
 </div>

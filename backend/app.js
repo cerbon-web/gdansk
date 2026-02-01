@@ -195,9 +195,9 @@ async function initDatabase(cb) {
             // store roles as comma-separated string
             await pool.query(
                 'INSERT INTO users (username, password, roles) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE username=username',
-                ['super', generatedPw, 'super']
+                ['super', generatedPw, 'supervisor']
             );
-            console.log('Super user created: username=super password=' + generatedPw);
+            console.log('Supervisor user created: username=super password=' + generatedPw);
         } catch (e) {
             console.error('Failed to insert super user', e);
         }
@@ -320,7 +320,7 @@ router.get('/test', (req, res) => {
 });
 
 // Protected sample endpoint: list users (no passwords)
-router.get('/users', authMiddleware(['super']), async (req, res) => {
+router.get('/users', authMiddleware(['supervisor']), async (req, res) => {
     try {
         const pool = req.app.locals.db;
         if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
@@ -328,6 +328,107 @@ router.get('/users', authMiddleware(['super']), async (req, res) => {
         return res.json({ users: rows });
     } catch (e) {
         console.error('Users list error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
+// DAILY contest endpoints
+// Supervisor starts/stops the daily questions
+router.post('/daily/start', authMiddleware(['supervisor']), async (req, res) => {
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        const { questions, duration_seconds } = req.body || {};
+        if (!questions) return res.status(400).json({ error: 'DAILY.REQUIRED_QUESTIONS' });
+        const dur = parseInt(duration_seconds, 10) || 60;
+        // Use REPLACE to ensure single-row control (id=1)
+        await pool.query('REPLACE INTO daily_control (id, active, questions, duration_seconds, started_by, started_at) VALUES (1, 1, ?, ?, ?, NOW())', [JSON.stringify(questions), dur, req.user.username || null]);
+        return res.json({ ok: true });
+    } catch (e) {
+        console.error('daily.start error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
+router.post('/daily/stop', authMiddleware(['supervisor']), async (req, res) => {
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        await pool.query('UPDATE daily_control SET active = 0 WHERE id = 1');
+        return res.json({ ok: true });
+    } catch (e) {
+        console.error('daily.stop error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
+// Public: status endpoint (shows whether daily is active)
+router.get('/daily/status', async (req, res) => {
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        const [rows] = await pool.query('SELECT id, active, duration_seconds, started_at, started_by FROM daily_control WHERE id = 1');
+        const ctrl = rows && rows[0] ? rows[0] : { active: 0 };
+        return res.json({ active: !!ctrl.active, duration_seconds: ctrl.duration_seconds || 60, started_at: ctrl.started_at || null, started_by: ctrl.started_by || null });
+    } catch (e) {
+        console.error('daily.status error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
+// Contester fetches questions and receives a session token (start time recorded server-side)
+router.post('/daily/fetch', async (req, res) => {
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        // get control row
+        const [ctrlRows] = await pool.query('SELECT id, active, questions, duration_seconds FROM daily_control WHERE id = 1');
+        const ctrl = ctrlRows && ctrlRows[0];
+        if (!ctrl || !ctrl.active) return res.status(404).json({ error: 'DAILY.NOT_ACTIVE' });
+        const questions = ctrl.questions ? JSON.parse(ctrl.questions) : null;
+        // create session
+        const sessionUuid = crypto.randomBytes(16).toString('hex');
+        let username = null;
+        try {
+            const auth = req.headers['authorization'];
+            if (auth && typeof auth === 'string' && auth.startsWith('Bearer ')) {
+                const payload = verifyJwt(auth.slice(7).trim(), JWT_SECRET);
+                if (payload && payload.username) username = payload.username;
+            }
+        } catch (e) {
+            // ignore
+        }
+        const [result] = await pool.query('INSERT INTO daily_sessions (session_uuid, username, start_at) VALUES (?, ?, NOW())', [sessionUuid, username]);
+        const sessionId = result.insertId;
+        return res.json({ session_id: sessionUuid, questions, duration_seconds: ctrl.duration_seconds || 60 });
+    } catch (e) {
+        console.error('daily.fetch error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
+});
+
+// Submit answers tied to a session token; server validates time window
+router.post('/daily/submit', async (req, res) => {
+    try {
+        const { session_id, answers } = req.body || {};
+        if (!session_id) return res.status(400).json({ error: 'DAILY.SESSION_REQUIRED' });
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        const [sessRows] = await pool.query('SELECT s.id, s.start_at, c.duration_seconds FROM daily_sessions s LEFT JOIN daily_control c ON c.id = 1 WHERE s.session_uuid = ?', [session_id]);
+        if (!sessRows || !sessRows.length) return res.status(404).json({ error: 'DAILY.SESSION_NOT_FOUND' });
+        const sess = sessRows[0];
+        const startAt = new Date(sess.start_at);
+        const now = new Date();
+        const elapsed = (now.getTime() - startAt.getTime()) / 1000;
+        const allowed = parseInt(sess.duration_seconds, 10) || 60;
+        if (elapsed > allowed + 5) { // small grace
+            return res.status(400).json({ error: 'DAILY.TIME_EXPIRED' });
+        }
+        // insert answers
+        await pool.query('INSERT INTO daily_answers (session_id, answers) VALUES (?, ?)', [sess.id, JSON.stringify(answers || {})]);
+        return res.json({ ok: true, elapsed_seconds: elapsed });
+    } catch (e) {
+        console.error('daily.submit error', e);
         return res.status(500).json({ error: 'ERROR.INTERNAL' });
     }
 });
