@@ -6,11 +6,11 @@
   <title>Page not found — Loading app</title>
   <style>body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:24px;color:#222}</style>
   <script>
-    // SPA fallback for GitHub Pages: fetch the built index from /frontend/
+    // SPA fallback for GitHub Pages: fetch the built index from /
     (async function(){
       const originalPath = location.pathname + location.search + location.hash;
       try {
-        const res = await fetch('/frontend/index.html');
+        const res = await fetch('/index.html');
         if (!res.ok) { throw new Error('index not found'); }
         const html = await res.text();
         const parser = new DOMParser();
@@ -39,13 +39,13 @@
         history.replaceState({}, '', originalPath);
       } catch (e) {
         // Fallback: redirect to the frontend root
-        try { location.replace('/frontend/'); } catch { location.href = '/frontend/'; }
+        try { location.replace('/'); } catch { location.href = '/'; }
       }
     })();
   </script>
 </head>
 <body>
   <h1>Loading application…</h1>
-  <p>If you are not redirected automatically, <a href="/frontend/">open the frontend</a>.</p>
+  <p>If you are not redirected automatically, <a href="/">open the frontend</a>.</p>
 </body>
 </html>
