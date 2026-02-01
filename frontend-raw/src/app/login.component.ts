@@ -2,14 +2,14 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormsModule],
+  imports: [CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -34,7 +34,10 @@ export class LoginComponent {
 
   private signupErrorSubject = new BehaviorSubject<string | null>(null);
   signupError$ = this.signupErrorSubject.asObservable();
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute, private translate: TranslateService) {
+
+  signupForm!: FormGroup;
+  submitted = false;
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute, private translate: TranslateService, private fb: FormBuilder) {
     // initialize active tab from query param if present
     try {
       const qp = this.route.snapshot.queryParams || {};
@@ -42,6 +45,16 @@ export class LoginComponent {
     } catch (e) {
       // ignore
     }
+    // build signup form
+    this.signupForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      password2: ['', [Validators.required]],
+      name: [''],
+      phone: ['', [Validators.pattern(/^[+\d][\d\s\-]{3,20}$/)]]
+    }, { validators: this.passwordsMatch });
+    // clear server error when user edits form
+    this.signupForm.valueChanges.subscribe(() => this.signupErrorSubject.next(null));
   }
 
   onLogin(): void {
@@ -75,16 +88,15 @@ export class LoginComponent {
 
   submitSignup(): void {
     this.signupErrorSubject.next(null);
-    if (!this.signupUsername || !this.signupPassword || !this.signupPassword2) {
-      this.signupErrorSubject.next('Please fill required fields');
-      return;
-    }
-    if (this.signupPassword !== this.signupPassword2) {
-      this.signupErrorSubject.next('Passwords do not match');
+    this.submitted = true;
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
+      // Let per-field messages show — do not set signupErrorSubject (reserved for server errors)
       return;
     }
     this.signupLoadingSubject.next(true);
-    this.auth.register(this.signupUsername, this.signupPassword, this.signupName, this.signupPhone).then(() => {
+    const v = this.signupForm.value;
+    this.auth.register(v.username.trim(), v.password, v.name, v.phone).then(() => {
       this.signupLoadingSubject.next(false);
       this.signupErrorSubject.next(null);
       this.doClose();
@@ -184,5 +196,35 @@ export class LoginComponent {
     } catch {
       // fallback to emitting
     }
+  }
+  // passwords match validator for the group
+  private passwordsMatch(c: AbstractControl): ValidationErrors | null {
+    const p = c.get('password')?.value;
+    const p2 = c.get('password2')?.value;
+    return p === p2 ? null : { passwordsMismatch: true };
+  }
+
+  // extract first readable validation error
+  getFirstSignupError(): string | null {
+    const u = this.signupForm.get('username');
+    if (u && u.touched && u.errors) {
+      if (u.errors['required']) return 'Username is required';
+      if (u.errors['minlength']) return 'Username must be at least 3 characters';
+    }
+    const pw = this.signupForm.get('password');
+    if (pw && pw.touched && pw.errors) {
+      if (pw.errors['required']) return 'Password is required';
+      if (pw.errors['minlength'] || pw.errors['maxlength']) return 'Password must be between 3 and 15 characters';
+    }
+    const p2 = this.signupForm.get('password2');
+    if (p2 && p2.touched && p2.errors) {
+      if (p2.errors['required']) return 'Please confirm your password';
+    }
+    if (this.signupForm.errors && this.signupForm.errors['passwordsMismatch']) return 'Passwords do not match';
+    const ph = this.signupForm.get('phone');
+    if (ph && ph.touched && ph.errors) {
+      if (ph.errors['pattern']) return 'Phone number is invalid';
+    }
+    return null;
   }
 }

@@ -23,27 +23,45 @@
         </div>
       </div>
 
-      <div *ngIf="activeTab === 'signup'">
+      <div *ngIf="activeTab === 'signup'" [formGroup]="signupForm">
         <label>
           {{ 'SIGNUP.USERNAME' | translate }}
-          <input type="text" [(ngModel)]="signupUsername" [disabled]="(signupLoading$ | async)" />
+          <input type="text" formControlName="username" [disabled]="(signupLoading$ | async)" (blur)="signupForm.get('username')?.markAsTouched()" />
         </label>
+        <div *ngIf="(signupForm.get('username')?.touched || submitted) && signupForm.get('username')?.errors" class="error">
+          <span *ngIf="signupForm.get('username')?.errors?.required">Username is required</span>
+          <span *ngIf="signupForm.get('username')?.errors?.minlength">Username must be at least 3 characters</span>
+        </div>
+
         <label>
           {{ 'SIGNUP.PASSWORD' | translate }}
-          <input type="password" [(ngModel)]="signupPassword" [disabled]="(signupLoading$ | async)" />
+          <input type="password" formControlName="password" [disabled]="(signupLoading$ | async)" (blur)="signupForm.get('password')?.markAsTouched()" />
         </label>
+        <div *ngIf="(signupForm.get('password')?.touched || submitted) && signupForm.get('password')?.errors" class="error">
+          <span *ngIf="signupForm.get('password')?.errors?.required">Password is required</span>
+          <span *ngIf="signupForm.get('password')?.errors?.minlength || signupForm.get('password')?.errors?.maxlength">Password must be between 3 and 15 characters</span>
+        </div>
+
         <label>
           {{ 'SIGNUP.PASSWORD_CONFIRM' | translate }}
-          <input type="password" [(ngModel)]="signupPassword2" [disabled]="(signupLoading$ | async)" />
+          <input type="password" formControlName="password2" [disabled]="(signupLoading$ | async)" (blur)="signupForm.get('password2')?.markAsTouched()" />
         </label>
+        <div *ngIf="(signupForm.get('password2')?.touched || submitted) && (signupForm.get('password2')?.errors || signupForm.errors?.passwordsMismatch)" class="error">
+          <span *ngIf="signupForm.get('password2')?.errors?.required">Please confirm your password</span>
+          <span *ngIf="signupForm.errors?.passwordsMismatch">Passwords do not match</span>
+        </div>
+
         <label>
           {{ 'SIGNUP.NAME' | translate }}
-          <input type="text" [(ngModel)]="signupName" [disabled]="(signupLoading$ | async)" />
+          <input type="text" formControlName="name" [disabled]="(signupLoading$ | async)" />
         </label>
+
         <label>
           {{ 'SIGNUP.PHONE' | translate }}
-          <input type="tel" [(ngModel)]="signupPhone" [disabled]="(signupLoading$ | async)" />
+          <input type="tel" formControlName="phone" [disabled]="(signupLoading$ | async)" (blur)="signupForm.get('phone')?.markAsTouched()" />
         </label>
+        <div *ngIf="(signupForm.get('phone')?.touched || submitted) && signupForm.get('phone')?.errors" class="error">Phone number is invalid</div>
+
         <div *ngIf="(signupError$ | async) as se" class="error">{{ se }}</div>
       </div>
     </section>

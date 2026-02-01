@@ -18,6 +18,9 @@ export class AuthService {
   private rolesSubject = new BehaviorSubject<Role[]>(['guest']);
   roles$ = this.rolesSubject.asObservable();
 
+  private usernameSubject = new BehaviorSubject<string | null>(null);
+  username$ = this.usernameSubject.asObservable();
+
   private readonly STORAGE_KEY = 'auth_session';
 
   constructor(private http: HttpClient, private translate: TranslateService) {
@@ -31,6 +34,10 @@ export class AuthService {
           this.rolesSubject.next(obj.roles || ['guest']);
           if (obj.token) {
             this._token = String(obj.token);
+          }
+          if (obj.username) {
+            this.usernameSubject.next(String(obj.username));
+            this._username = String(obj.username);
           }
         }
       }
@@ -103,6 +110,8 @@ export class AuthService {
     this.authenticatedSubject.next(false);
     this.rolesSubject.next(['guest']);
     this._token = undefined;
+    this._username = undefined;
+    try { this.usernameSubject.next(null); } catch {}
     try { localStorage.removeItem(this.STORAGE_KEY); } catch { }
   }
 
@@ -114,6 +123,8 @@ export class AuthService {
 
   private _token?: string;
 
+  private _username?: string;
+
   getToken(): string | undefined {
     return this._token;
   }
@@ -124,6 +135,8 @@ export class AuthService {
       if (username) obj.username = username;
       if (token) obj.token = token;
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(obj));
+      this._username = username;
+      try { this.usernameSubject.next(username ? String(username) : null); } catch {}
     } catch (e) { /* ignore */ }
   }
 }

@@ -34,6 +34,7 @@
     ,"FAILED": "Kayıt başarısız oldu, lütfen daha sonra tekrar deneyin"
   },
   "LOGOUT": "Çıkış",
+  "WELCOME": "Hoşgeldin {{username}}",
   "SUPER": {
     "USERS_LIST": "Kullanıcı listesi",
     "OTHER": "Diğer",
