@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-daily-contest',
@@ -10,9 +11,9 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./daily-contest.component.css']
 })
 export class DailyContestComponent {
-  @Output() close = new EventEmitter<void>();
+  constructor(private router: Router) {}
 
   onBack(): void {
-    this.close.emit();
+    try { this.router.navigate(['/']); } catch { /* ignore */ }
   }
 }

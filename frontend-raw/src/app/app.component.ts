@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
 import { UsersComponent } from './users.component';
@@ -29,11 +29,9 @@ export class AppComponent {
   createdAt: string | null = null;
   createdYear: string | null = null;
   showLogin = false;
-  showQuran = false;
-  showDaily = false;
   showUsers = false;
 
-  constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title, private auth: AuthService) {
+  constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title, private auth: AuthService, private router: Router) {
     // configure ngx-translate
     translate.addLangs(['en', 'pl', 'tr', 'ru', 'ar']);
     // make Arabic the default language but prefer saved selection in localStorage
@@ -121,9 +119,9 @@ export class AppComponent {
   }
 
   openQuran(): void {
-    // if user is authenticated, show the page; otherwise prompt login
+    // if user is authenticated, navigate to routed Quran page; otherwise prompt login
     if (this.auth.isAuthenticated()) {
-      this.showQuran = true;
+      try { this.router.navigate(['quran']); } catch { /* ignore */ }
     } else {
       this.openLogin();
     }
@@ -131,15 +129,14 @@ export class AppComponent {
 
   openDaily(): void {
     if (this.auth.isAuthenticated()) {
-      this.showDaily = true;
+      try { this.router.navigate(['daily']); } catch { /* ignore */ }
     } else {
       this.openLogin();
     }
   }
 
   closePage(): void {
-    this.showQuran = false;
-    this.showDaily = false;
+    // no-op for routed pages
   }
 
   closeUsers(): void {
