@@ -8,3 +8,6 @@ Thumbs.db
 
 # Ignore local frontend test files
 frontend/
+
+# Ignore backend log file
+backend/backend.log
