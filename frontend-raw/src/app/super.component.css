@@ -1,8 +1,6 @@
-.super-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:11000}
-.super-panel{background:white;border-radius:8px;width:420px;max-width:95%;padding:12px;box-shadow:0 8px 28px rgba(0,0,0,0.3)}
-.super-header{display:flex;align-items:center;justify-content:space-between}
-.super-header h3{margin:0}
-.super-header .close{background:transparent;border:0;font-size:20px;cursor:pointer}
-.super-menu ul{list-style:none;padding:0;margin:8px 0}
-.super-menu li{padding:8px;border-bottom:1px solid #eee}
-.super-body{margin-top:12px}
+.system-page { padding: 16px; }
+.system-header { display:flex; align-items:center; gap:12px; }
+.back-btn { background:transparent; border:none; cursor:pointer; font-size:16px; }
+.system-body { margin-top:16px; }
+.system-menu ul{list-style:none;padding:0;margin:8px 0}
+.system-menu li{padding:8px;border-bottom:1px solid #eee}

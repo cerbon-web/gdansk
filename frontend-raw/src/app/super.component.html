@@ -1,18 +1,15 @@
-<div class="super-overlay">
-  <div class="super-panel" role="dialog" aria-label="Superpanel">
-    <header class="super-header">
-      <h3>Super Admin</h3>
-      <button class="close" (click)="closePanel()">×</button>
-    </header>
-    <nav class="super-menu">
-      <ul>
-        <li>{{ 'SUPER.USERS_LIST' | translate }}</li>
-        <li>{{ 'SUPER.OTHER' | translate }}</li>
-        <!-- more menu items will be added later by user -->
-      </ul>
-    </nav>
-    <section class="super-body">
-      <p>{{ 'SUPER.DESCRIPTION' | translate }}</p>
-    </section>
-  </div>
+<div class="system-page">
+  <header class="system-header">
+    <button class="back-btn" (click)="closePanel()">← {{ 'BACK' | translate }}</button>
+    <h2>{{ 'SUPER.DESCRIPTION' | translate }}</h2>
+  </header>
+  <nav class="system-menu">
+    <ul>
+      <li>{{ 'SUPER.USERS_LIST' | translate }}</li>
+      <li>{{ 'SUPER.OTHER' | translate }}</li>
+    </ul>
+  </nav>
+  <section class="system-body">
+    <p>{{ 'SUPER.DESCRIPTION' | translate }}</p>
+  </section>
 </div>

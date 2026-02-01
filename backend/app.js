@@ -9,6 +9,85 @@ const app = express();
 app.use(express.json());
 const crypto = require('crypto');
 
+// Minimal JWT helper (no external deps) — HS256 (HMAC-SHA256)
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret_change_me';
+
+function base64url(input) {
+    return Buffer.from(JSON.stringify(input))
+        .toString('base64')
+        .replace(/=/g, '')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_');
+}
+
+function signJwt(payload, secret) {
+    const header = { alg: 'HS256', typ: 'JWT' };
+    const seg1 = base64url(header);
+    const seg2 = base64url(payload);
+    const sig = crypto
+        .createHmac('sha256', secret)
+        .update(seg1 + '.' + seg2)
+        .digest('base64')
+        .replace(/=/g, '')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_');
+    return `${seg1}.${seg2}.${sig}`;
+}
+
+function base64urlDecodeToJson(str) {
+    const s = str.replace(/-/g, '+').replace(/_/g, '/');
+    const pad = s.length % 4 === 0 ? '' : '='.repeat(4 - (s.length % 4));
+    const b = Buffer.from(s + pad, 'base64').toString('utf8');
+    return JSON.parse(b);
+}
+
+function verifyJwt(token, secret) {
+    try {
+        const parts = token.split('.');
+        if (parts.length !== 3) return null;
+        const [h, p, sig] = parts;
+        const expected = crypto
+            .createHmac('sha256', secret)
+            .update(h + '.' + p)
+            .digest('base64')
+            .replace(/=/g, '')
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_');
+        if (expected !== sig) return null;
+        const payload = base64urlDecodeToJson(p);
+        const now = Math.floor(Date.now() / 1000);
+        if (payload.exp && payload.exp < now) return null;
+        return payload;
+    } catch (e) {
+        return null;
+    }
+}
+
+function authMiddleware(requiredRoles) {
+    return (req, res, next) => {
+        const auth = req.headers['authorization'] || req.headers['Authorization'];
+        if (!auth || typeof auth !== 'string' || !auth.startsWith('Bearer '))
+            return res.status(401).json({ error: 'LOGIN.INVALID' });
+        const token = auth.slice(7).trim();
+        const payload = verifyJwt(token, JWT_SECRET);
+        if (!payload) return res.status(401).json({ error: 'LOGIN.INVALID' });
+        // attach to request
+        req.user = payload;
+        if (Array.isArray(requiredRoles) && requiredRoles.length) {
+            const userRoles = Array.isArray(payload.roles)
+                ? payload.roles
+                : payload.roles
+                ? String(payload.roles)
+                        .split(',')
+                        .map((r) => r.trim())
+                : [];
+            const ok = requiredRoles.some((r) => userRoles.includes(r));
+            if (!ok) return res.status(403).json({ error: 'LOGIN.FORBIDDEN' });
+        }
+        next();
+    };
+}
+
 // Simple file logger: append console output to backend.log next to this file
 try {
     const LOG_PATH = path.join(__dirname, 'backend.log');
@@ -17,23 +96,48 @@ try {
     const origError = console.error.bind(console);
 
     function serializeArgs(args) {
-        return args.map(a => {
-            if (typeof a === 'string') return a;
-            try { return JSON.stringify(a); } catch (e) { return String(a); }
-        }).join(' ');
+        return args
+            .map((a) => {
+                if (typeof a === 'string') return a;
+                try {
+                    return JSON.stringify(a);
+                } catch (e) {
+                    return String(a);
+                }
+            })
+            .join(' ');
     }
 
     console.log = (...args) => {
-        try { logStream.write(new Date().toISOString() + ' [LOG] ' + serializeArgs(args) + '\n'); } catch (e) { /* ignore */ }
+        try {
+            logStream.write(new Date().toISOString() + ' [LOG] ' + serializeArgs(args) + '\n');
+        } catch (e) {
+            /* ignore */
+        }
         origLog(...args);
     };
+
     console.error = (...args) => {
-        try { logStream.write(new Date().toISOString() + ' [ERR] ' + serializeArgs(args) + '\n'); } catch (e) { /* ignore */ }
+        try {
+            logStream.write(new Date().toISOString() + ' [ERR] ' + serializeArgs(args) + '\n');
+        } catch (e) {
+            /* ignore */
+        }
         origError(...args);
     };
 
-    process.on('exit', () => { try { logStream.end(); } catch (e) {} });
-    process.on('uncaughtException', (err) => { try { console.error('uncaughtException', err); } finally { process.exit(1); } });
+    process.on('exit', () => {
+        try {
+            logStream.end();
+        } catch (e) {}
+    });
+    process.on('uncaughtException', (err) => {
+        try {
+            console.error('uncaughtException', err);
+        } finally {
+            process.exit(1);
+        }
+    });
 } catch (e) {
     // if logging setup fails, continue without file logging
 }
@@ -51,12 +155,27 @@ async function initDatabase(cb) {
 
     try {
         // connect without database to ensure DB exists
-        const adminConn = await mysql.createConnection({ host: DB_HOST, port: DB_PORT, user: DB_USER, password: DB_PASSWORD, multipleStatements: true });
+        const adminConn = await mysql.createConnection({
+            host: DB_HOST,
+            port: DB_PORT,
+            user: DB_USER,
+            password: DB_PASSWORD,
+            multipleStatements: true,
+        });
         await adminConn.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
         await adminConn.end();
 
         // create pool for app
-        const pool = mysql.createPool({ host: DB_HOST, port: DB_PORT, user: DB_USER, password: DB_PASSWORD, database: DB_NAME, waitForConnections: true, connectionLimit: 10, multipleStatements: true });
+        const pool = mysql.createPool({
+            host: DB_HOST,
+            port: DB_PORT,
+            user: DB_USER,
+            password: DB_PASSWORD,
+            database: DB_NAME,
+            waitForConnections: true,
+            connectionLimit: 10,
+            multipleStatements: true,
+        });
 
         // check for CREATED table
         const [rows] = await pool.query("SHOW TABLES LIKE 'CREATED'");
@@ -74,7 +193,10 @@ async function initDatabase(cb) {
         try {
             const generatedPw = crypto.randomBytes(12).toString('hex');
             // store roles as comma-separated string
-            await pool.query('INSERT INTO users (username, password, roles) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE username=username', ['super', generatedPw, 'super']);
+            await pool.query(
+                'INSERT INTO users (username, password, roles) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE username=username',
+                ['super', generatedPw, 'super']
+            );
             console.log('Super user created: username=super password=' + generatedPw);
         } catch (e) {
             console.error('Failed to insert super user', e);
@@ -142,8 +264,16 @@ router.post('/login', async (req, res) => {
         const user = rows[0];
         // plaintext comparison for now
         if (String(user.password) !== String(password)) return res.status(401).json({ error: 'LOGIN.INVALID' });
-        const roles = user.roles ? String(user.roles).split(',').map(r => r.trim()).filter(Boolean) : ['user'];
-        return res.json({ username: user.username, roles });
+        const roles = user.roles ? String(user.roles).split(',').map((r) => r.trim()).filter(Boolean) : ['contester'];
+        try {
+            const iat = Math.floor(Date.now() / 1000);
+            const exp = iat + 60 * 60 * 24; // 24h
+            const token = signJwt({ username: user.username, roles, iat, exp }, JWT_SECRET);
+            return res.json({ username: user.username, roles, token });
+        } catch (e) {
+            console.error('Failed to sign JWT', e);
+            return res.status(500).json({ error: 'ERROR.INTERNAL' });
+        }
     } catch (e) {
         console.error('Login error', e);
         return res.status(500).json({ error: 'ERROR.INTERNAL' });
@@ -153,14 +283,27 @@ router.post('/login', async (req, res) => {
 router.get('/test', (req, res) => {
     res.json({
         time: new Date().toISOString(),
-        node: process.version
+        node: process.version,
     });
+});
+
+// Protected sample endpoint: list users (no passwords)
+router.get('/users', authMiddleware(['super']), async (req, res) => {
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
+        const [rows] = await pool.query('SELECT username, roles, created_at FROM users ORDER BY username');
+        return res.json({ users: rows });
+    } catch (e) {
+        console.error('Users list error', e);
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
+    }
 });
 
 router.get('/', (req, res) => {
     res.json({
         status: 'ok',
-        routes: ['/test']
+        routes: ['/test'],
     });
 });
 

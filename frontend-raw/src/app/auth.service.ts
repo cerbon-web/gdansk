@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-export type Role = 'user' | 'admin' | 'guest' | 'super';
+export type Role = 'contester' | 'supervisor' | 'guest' | 'super';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -40,7 +40,7 @@ export class AuthService {
     const url = 'https://api.cerbon.id/islam.gdansk/login';
     try {
       const resp: any = await this.http.post(url, { username, password }).toPromise();
-      const roles: Role[] = Array.isArray(resp.roles) ? resp.roles : (resp.roles ? String(resp.roles).split(',').map((r: string) => r.trim()) : ['user']);
+      const roles: Role[] = Array.isArray(resp.roles) ? resp.roles : (resp.roles ? String(resp.roles).split(',').map((r: string) => r.trim()) : ['contester']);
       this.authenticatedSubject.next(true);
       this.rolesSubject.next(roles as Role[]);
       this._persistSession(true, roles as Role[], username);
@@ -77,14 +77,5 @@ export class AuthService {
       if (username) obj.username = username;
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(obj));
     } catch (e) { /* ignore */ }
-  }
-
-  private _generatePassword(len: number): string {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-    let out = '';
-    for (let i = 0; i < len; i++) {
-      out += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return out;
   }
 }

@@ -17,6 +17,7 @@
     "NOT_IMPLEMENTED": "Jeszcze nie zaimplementowano",
     "INVALID": "Nieprawidłowa nazwa użytkownika lub hasło",
     "REQUIRED": "Nazwa użytkownika i hasło są wymagane"
+    ,"FORBIDDEN": "Brak dostępu"
   }
   ,"LOGOUT": "Wyloguj"
   ,"SUPER": {

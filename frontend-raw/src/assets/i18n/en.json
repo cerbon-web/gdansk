@@ -16,13 +16,14 @@
     "BUTTON": "Login",
     "NOT_IMPLEMENTED": "Not implemented yet",
     "INVALID": "Invalid username or password",
-    "REQUIRED": "Username and password required"
+    "REQUIRED": "Username and password required",
+    "FORBIDDEN": "Forbidden"
   }
   ,"LOGOUT": "Logout"
   ,"SUPER": {
     "USERS_LIST": "Users list",
     "OTHER": "Other",
-    "DESCRIPTION": "Developer super admin panel"
+    "DESCRIPTION": "Super admin panel"
   }
   ,"BACK": "Back"
   ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",

@@ -17,6 +17,7 @@
     "NOT_IMPLEMENTED": "Henüz uygulanmadı",
     "INVALID": "Geçersiz kullanıcı adı veya parola",
     "REQUIRED": "Kullanıcı adı ve parola gerekli"
+    ,"FORBIDDEN": "Yasak"
   }
   ,"LOGOUT": "Çıkış"
   ,"SUPER": {
