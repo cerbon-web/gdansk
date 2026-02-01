@@ -14,8 +14,3 @@ CREATE TABLE IF NOT EXISTS users (
   roles TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE INDEX idx_users_username ON users(username);
-
--- Insert a default admin user if desired (commented out):
--- INSERT INTO users(username, password, roles) VALUES('admin','changeme','admin');
