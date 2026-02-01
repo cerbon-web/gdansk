@@ -72,7 +72,7 @@ export class AppComponent {
     // clear previous API message so old errors don't remain visible under the loading text
     this.apiMessageSubject.next(null);
     // show loading via template's translate pipe; avoid setting translated text here
-    this.http.get('https://api.cerbon.id/gdansk/test', { responseType: 'text' }).subscribe({
+    this.http.get('https://api.cerbon.id/islam.gdansk/test', { responseType: 'text' }).subscribe({
       next: (text: string) => {
         console.log('API success', text);
         this.loading = false;
