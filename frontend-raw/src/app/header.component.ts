@@ -14,8 +14,6 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   @Output() languageChanged = new EventEmitter<string>();
-  @Output() superClicked = new EventEmitter<void>();
-  @Output() loginClicked = new EventEmitter<void>();
   isSuper = false;
   private subs: Subscription | null = null;
 
@@ -28,15 +26,12 @@ export class HeaderComponent {
 
   logout(): void {
     this.auth.logout();
+    try { this.router.navigate(['/']); } catch { /* ignore */ }
   }
 
   openLogin(): void {
-    this.loginClicked.emit();
-  }
-
-  openSuper(): void {
-    // navigate to the super page route
-    try { this.router.navigate(['super']); } catch { this.superClicked.emit(); }
+    // navigate to the routed login page instead of opening the modal
+    try { this.router.navigate(['login']); } catch {  }
   }
 
   switch(lang: string) {

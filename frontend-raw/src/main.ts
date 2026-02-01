@@ -5,7 +5,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideRouter } from '@angular/router';
 import { canActivateSuper } from './app/super.guard';
-import { canActivateContester } from './app/quran.guard';
+import { canActivateContester } from './app/role.guard';
+import { canActivateHomeRedirect } from './app/home-redirect.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	const baseEl = document.getElementsByTagName('base')[0];
@@ -19,8 +20,11 @@ bootstrapApplication(AppComponent, {
 		provideHttpClient(),
 		// provide router for standalone bootstrap
 		provideRouter([
+			{ path: '', loadComponent: () => import('./app/home.component').then(m => m.HomeComponent), canActivate: [canActivateHomeRedirect] },
+			{ path: 'login', loadComponent: () => import('./app/login.component').then(m => m.LoginComponent) },
 			{ path: 'quran', loadComponent: () => import('./app/quran-contest.component').then(m => m.QuranContestComponent), canActivate: [canActivateContester] },
 			{ path: 'daily', loadComponent: () => import('./app/daily-contest.component').then(m => m.DailyContestComponent), canActivate: [canActivateContester] },
+			{ path: 'users', loadComponent: () => import('./app/users.component').then(m => m.UsersComponent), canActivate: [canActivateSuper] },
 			{ path: 'super', loadComponent: () => import('./app/super.component').then(m => m.SuperComponent), canActivate: [canActivateSuper] }
 		]),
 		// provide providers produced by TranslateModule.forRoot for standalone bootstrap

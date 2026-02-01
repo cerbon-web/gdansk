@@ -6,7 +6,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterModule, Router } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
-import { UsersComponent } from './users.component';
 import { QuranContestComponent } from './quran-contest.component';
 import { DailyContestComponent } from './daily-contest.component';
 import { AuthService } from './auth.service';
@@ -15,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, UsersComponent, QuranContestComponent, DailyContestComponent, RouterModule],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, QuranContestComponent, DailyContestComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -29,7 +28,6 @@ export class AppComponent {
   createdAt: string | null = null;
   createdYear: string | null = null;
   showLogin = false;
-  showUsers = false;
 
   constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title, private auth: AuthService, private router: Router) {
     // configure ngx-translate
@@ -139,26 +137,16 @@ export class AppComponent {
     // no-op for routed pages
   }
 
-  closeUsers(): void {
-    this.showUsers = false;
-  }
-
-  openUsers(): void {
-    if (this.auth.isAuthenticated()) {
-      // simply open: the backend will forbid if token/role missing
-      this.showUsers = true;
-    } else {
-      this.openLogin();
-    }
-  }
 
 
   onLoginClose(): void {
     this.showLogin = false;
   }
 
-  // handle navigation events from Super component
+  // handle navigation events from Super component (unused when Super routes directly)
   onSuperNavigate(target: string): void {
-    if (target === 'users') this.openUsers();
+    if (target === 'users') {
+      try { this.router.navigate(['users']); } catch { /* ignore */ }
+    }
   }
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,6 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  @Output() close = new EventEmitter<void>();
   private messageKeySubject = new BehaviorSubject<string | null>(null);
   messageKey$ = this.messageKeySubject.asObservable();
 
@@ -21,7 +21,7 @@ export class LoginComponent {
   serverError$ = this.serverErrorSubject.asObservable();
   username = '';
   password = '';
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   onLogin(): void {
     this.messageKeySubject.next(null);
@@ -49,6 +49,15 @@ export class LoginComponent {
   }
 
   private doClose(): void {
-    this.close.emit();
+    // If opened via router (URL contains '/login') navigate home; otherwise emit close for modal usage
+    try {
+      const isRouted = !!(this.router && typeof this.router.url === 'string' && this.router.url.indexOf('/login') >= 0);
+      if (isRouted) {
+        this.router.navigate(['/']);
+        return;
+      }
+    } catch {
+      // fallback to emitting
+    }
   }
 }

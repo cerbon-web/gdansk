@@ -19,7 +19,14 @@ export class SuperComponent {
   }
 
   open(name: string): void {
-    // for now navigate back to home — extend with routed targets later
-    try { this.router.navigate(['/']); } catch { /* no-op */ }
+    // navigate to routed targets
+    try {
+      if (name === 'users') {
+        this.router.navigate(['/users']);
+        return;
+      }
+      // fallback: go home
+      this.router.navigate(['/']);
+    } catch { /* no-op */ }
   }
 }

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface UserItem {
   username: string;
@@ -30,7 +31,7 @@ export class UsersComponent implements OnInit {
   private errorSubject = new BehaviorSubject<string | null>(null);
   error$ = this.errorSubject.asObservable();
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -61,5 +62,5 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  closePanel(): void { this.close.emit(); }
+  closePanel(): void { try { this.router.navigate(['/super']); } catch { /* ignore */ } }
 }
