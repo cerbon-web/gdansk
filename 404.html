@@ -1,49 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Page not found — Loading app</title>
-  <style>body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:24px;color:#222}</style>
-  <script>
-    // SPA fallback for GitHub Pages: fetch the built index from /
-    (async function(){
-      const originalPath = location.pathname + location.search + location.hash;
-      try {
-        const res = await fetch('/index.html');
-        if (!res.ok) { throw new Error('index not found'); }
-        const html = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
 
-        // Replace head contents (so <base>, meta, links are applied)
-        const head = document.getElementsByTagName('head')[0];
-        head.innerHTML = doc.head.innerHTML;
-
-        // Replace body
-        document.body.innerHTML = doc.body.innerHTML;
-
-        // Re-insert and execute scripts from the fetched index
-        // Scripts must be added after base href is present so relative URLs resolve
-        const scripts = doc.querySelectorAll('script');
-        for (const s of scripts) {
-          const ns = document.createElement('script');
-          const src = s.getAttribute('src');
-          if (src) ns.src = src;
-          else ns.textContent = s.textContent || '';
-          ns.async = false;
-          document.head.appendChild(ns);
-        }
-
-        // Restore the original URL so SPA routing can handle it
-        history.replaceState({}, '', originalPath);
-      } catch (e) {
-        // Fallback: redirect to the frontend root
-        try { location.replace('/'); } catch { location.href = '/'; }
-      }
-    })();
-  </script>
-</head>
 <body>
   <h1>Loading application…</h1>
   <p>If you are not redirected automatically, <a href="/">open the frontend</a>.</p>
