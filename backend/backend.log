@@ -1,1 +1,0 @@
-2026-02-01T10:44:43.098Z [ERR] Failed to initialize database {"message":"connect ECONNREFUSED 127.0.0.1:3306","code":"ECONNREFUSED","errno":-4078}
