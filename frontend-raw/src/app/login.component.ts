@@ -16,11 +16,7 @@ export class LoginComponent {
   messageKey: string | null = null;
   username = '';
   password = '';
-  devSuperPw: string | null = null;
-
-  constructor(private auth: AuthService) {
-    try { this.devSuperPw = this.auth.getOrCreateSuperPassword(); } catch { this.devSuperPw = null; }
-  }
+  constructor(private auth: AuthService) {}
 
   onLogin(): void {
     this.messageKey = null;

@@ -14,11 +14,7 @@
         <input type="password" [(ngModel)]="password" />
       </label>
       <div *ngIf="messageKey" class="error">{{ messageKey | translate }}</div>
-      <div *ngIf="devSuperPw" class="dev-info">
-        <strong>Developer super:</strong>
-        <div style="margin-top:6px">username: <code>super</code></div>
-        <div>password: <code>{{ devSuperPw }}</code></div>
-      </div>
+      
     </section>
     <footer class="modal-footer">
       <button (click)="onLogin()">{{ 'LOGIN.BUTTON' | translate }}</button>

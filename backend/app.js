@@ -5,6 +5,10 @@ const mysql = require('mysql2/promise');
 
 const app = express();
 
+// parse JSON bodies for API endpoints
+app.use(express.json());
+const crypto = require('crypto');
+
 // Simple file logger: append console output to backend.log next to this file
 try {
     const LOG_PATH = path.join(__dirname, 'backend.log');
@@ -65,6 +69,17 @@ async function initDatabase(cb) {
         const sql = fs.readFileSync(SCHEMA_FILE, 'utf8');
         await pool.query(sql);
         await pool.query("INSERT INTO CREATED(created_at) VALUES (NOW())");
+
+        // create default super user with generated password
+        try {
+            const generatedPw = crypto.randomBytes(12).toString('hex');
+            // store roles as comma-separated string
+            await pool.query('INSERT INTO users (username, password, roles) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE username=username', ['super', generatedPw, 'super']);
+            console.log('Super user created: username=super password=' + generatedPw);
+        } catch (e) {
+            console.error('Failed to insert super user', e);
+        }
+
         console.log('Database initialized from schema.sql');
         return cb(null, pool);
     } catch (e) {
@@ -114,6 +129,26 @@ app.use((req, res, next) => {
 });
 
 const router = express.Router();
+
+// Login endpoint
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body || {};
+    if (!username || !password) return res.status(400).json({ error: 'username and password required' });
+    try {
+        const pool = req.app.locals.db;
+        if (!pool) return res.status(500).json({ error: 'db not ready' });
+        const [rows] = await pool.query('SELECT username, password, roles FROM users WHERE username = ?', [username]);
+        if (!rows || rows.length === 0) return res.status(401).json({ error: 'invalid credentials' });
+        const user = rows[0];
+        // plaintext comparison for now
+        if (String(user.password) !== String(password)) return res.status(401).json({ error: 'invalid credentials' });
+        const roles = user.roles ? String(user.roles).split(',').map(r => r.trim()).filter(Boolean) : ['user'];
+        return res.json({ username: user.username, roles });
+    } catch (e) {
+        console.error('Login error', e);
+        return res.status(500).json({ error: 'internal' });
+    }
+});
 
 router.get('/test', (req, res) => {
     res.json({
