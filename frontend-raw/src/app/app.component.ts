@@ -6,15 +6,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterModule, Router } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
-import { QuranContestComponent } from './quran-contest.component';
-import { DailyContestComponent } from './daily-contest.component';
 import { AuthService } from './auth.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, QuranContestComponent, DailyContestComponent, RouterModule],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

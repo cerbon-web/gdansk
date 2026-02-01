@@ -195,9 +195,9 @@ async function initDatabase(cb) {
             // store roles as comma-separated string
             await pool.query(
                 'INSERT INTO users (username, password, roles) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE username=username',
-                ['super', generatedPw, 'supervisor']
+                ['super', generatedPw, 'super']
             );
-            console.log('Supervisor user created: username=super password=' + generatedPw);
+            console.log('Super user created: username=super password=' + generatedPw);
         } catch (e) {
             console.error('Failed to insert super user', e);
         }

@@ -4,9 +4,7 @@ import { AppComponent } from './app/app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideRouter } from '@angular/router';
-import { canActivateSuper } from './app/super.guard';
-import { canActivateContester } from './app/role.guard';
-import { canActivateHomeRedirect } from './app/home-redirect.guard';
+import { canActivateSuper, canActivateContester, canActivateSupervisor, canActivateHomeRedirect } from './app/guards';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	const baseEl = document.getElementsByTagName('base')[0];
