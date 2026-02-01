@@ -81,9 +81,12 @@ function startServer(db) {
     if (rawBase && rawBase !== '/') {
         const basePath = '/' + String(rawBase).replace(/^\/+|\/+$/g, '');
         app.use(basePath, router);
-        const PORT = process.env.PORT || 80;
+        const PORT = process.env.PORT || 8080;
         app.listen(PORT, () => {
             console.log(`Server listening on http://localhost:${PORT}${basePath}/`);
+        }).on('error', (err) => {
+            console.error('Failed to bind server port', err);
+            process.exit(1);
         });
     } else {
         // No BASE_PATH provided: mount router at root and also at a single-segment prefix
@@ -91,9 +94,12 @@ function startServer(db) {
         app.use('/', router);
         app.use('/:prefix', router);
 
-        const PORT = process.env.PORT || 80;
+        const PORT = process.env.PORT || 8080;
         app.listen(PORT, () => {
             console.log(`Server listening on http://localhost:${PORT}/ (also available at /:prefix/)`);
+        }).on('error', (err) => {
+            console.error('Failed to bind server port', err);
+            process.exit(1);
         });
     }
 }
