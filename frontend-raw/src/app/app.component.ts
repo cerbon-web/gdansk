@@ -6,12 +6,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
 import { SuperComponent } from './super.component';
+import { QuranContestComponent } from './quran-contest.component';
+import { DailyContestComponent } from './daily-contest.component';
+import { AuthService } from './auth.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent, QuranContestComponent, DailyContestComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -26,12 +29,10 @@ export class AppComponent {
   createdYear: string | null = null;
   showLogin = false;
   showSuper = false;
+  showQuran = false;
+  showDaily = false;
 
-  ngOnInit(): void {
-    this.checkBackendConnectivity();
-  }
-
-  constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title) {
+  constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title, private auth: AuthService) {
     // configure ngx-translate
     translate.addLangs(['en', 'pl', 'tr', 'ru', 'ar']);
     // make Arabic the default language but prefer saved selection in localStorage
@@ -45,6 +46,10 @@ export class AppComponent {
     // set document title from translations and update on language change
     this.setTranslatedTitle();
     this.translate.onLangChange.subscribe(() => this.setTranslatedTitle());
+  }
+
+  ngOnInit(): void {
+    this.checkBackendConnectivity();
   }
 
   private setTranslatedTitle(): void {
@@ -112,6 +117,28 @@ export class AppComponent {
 
   openLogin(): void {
     this.showLogin = true;
+  }
+
+  openQuran(): void {
+    // if user is authenticated, show the page; otherwise prompt login
+    if (this.auth.isAuthenticated()) {
+      this.showQuran = true;
+    } else {
+      this.openLogin();
+    }
+  }
+
+  openDaily(): void {
+    if (this.auth.isAuthenticated()) {
+      this.showDaily = true;
+    } else {
+      this.openLogin();
+    }
+  }
+
+  closePage(): void {
+    this.showQuran = false;
+    this.showDaily = false;
   }
 
   openSuper(): void {

@@ -133,20 +133,20 @@ const router = express.Router();
 // Login endpoint
 router.post('/login', async (req, res) => {
     const { username, password } = req.body || {};
-    if (!username || !password) return res.status(400).json({ error: 'username and password required' });
+    if (!username || !password) return res.status(400).json({ error: 'LOGIN.REQUIRED' });
     try {
         const pool = req.app.locals.db;
-        if (!pool) return res.status(500).json({ error: 'db not ready' });
+        if (!pool) return res.status(500).json({ error: 'ERROR.DB_NOT_READY' });
         const [rows] = await pool.query('SELECT username, password, roles FROM users WHERE username = ?', [username]);
-        if (!rows || rows.length === 0) return res.status(401).json({ error: 'invalid credentials' });
+        if (!rows || rows.length === 0) return res.status(401).json({ error: 'LOGIN.INVALID' });
         const user = rows[0];
         // plaintext comparison for now
-        if (String(user.password) !== String(password)) return res.status(401).json({ error: 'invalid credentials' });
+        if (String(user.password) !== String(password)) return res.status(401).json({ error: 'LOGIN.INVALID' });
         const roles = user.roles ? String(user.roles).split(',').map(r => r.trim()).filter(Boolean) : ['user'];
         return res.json({ username: user.username, roles });
     } catch (e) {
         console.error('Login error', e);
-        return res.status(500).json({ error: 'internal' });
+        return res.status(500).json({ error: 'ERROR.INTERNAL' });
     }
 });
 

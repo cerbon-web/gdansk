@@ -15,7 +15,8 @@
     "PASSWORD": "Hasło",
     "BUTTON": "Zaloguj",
     "NOT_IMPLEMENTED": "Jeszcze nie zaimplementowano",
-    "INVALID": "Nieprawidłowa nazwa użytkownika lub hasło"
+    "INVALID": "Nieprawidłowa nazwa użytkownika lub hasło",
+    "REQUIRED": "Nazwa użytkownika i hasło są wymagane"
   }
   ,"LOGOUT": "Wyloguj"
   ,"SUPER": {
@@ -23,4 +24,8 @@
     "OTHER": "Inne",
     "DESCRIPTION": "Panel super administratora dla dewelopera"
   }
+  ,"BACK": "Powrót"
+  ,"QURAN_DRAFT_INTRO": "Konkurs Koranu (strona robocza)",
+  "DAILY_DRAFT_INTRO": "Konkurs codzienny (strona robocza)",
+  "INTERNAL": "Błąd serwera"
 }

@@ -1,0 +1,4 @@
+.system-page { padding: 16px; }
+.system-header { display:flex; align-items:center; gap:12px; }
+.back-btn { background:transparent; border:none; cursor:pointer; font-size:16px; }
+.system-body { margin-top:16px; }

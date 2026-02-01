@@ -9,6 +9,11 @@ export class AuthService {
   private authenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.authenticatedSubject.asObservable();
 
+  // synchronous accessor for current auth state
+  isAuthenticated(): boolean {
+    return this.authenticatedSubject.value;
+  }
+
   private rolesSubject = new BehaviorSubject<Role[]>(['guest']);
   roles$ = this.rolesSubject.asObservable();
 
@@ -41,7 +46,14 @@ export class AuthService {
       this._persistSession(true, roles as Role[], username);
       return;
     } catch (e) {
-      return Promise.reject(new Error('Invalid username or password'));
+      // try to extract server-provided error message
+      try {
+        const err: any = e as any;
+        const msg = err?.error?.error || err?.message || 'Invalid username or password';
+        return Promise.reject(new Error(String(msg)));
+      } catch (_) {
+        return Promise.reject(new Error('Invalid username or password'));
+      }
     }
   }
 

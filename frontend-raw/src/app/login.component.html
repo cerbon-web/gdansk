@@ -13,12 +13,15 @@
         {{ 'LOGIN.PASSWORD' | translate }}
         <input type="password" [(ngModel)]="password" />
       </label>
-      <div *ngIf="messageKey" class="error">{{ messageKey | translate }}</div>
+      <div *ngIf="(serverError$ | async) as srv" class="error">{{ srv }}</div>
+      <div *ngIf="(messageKey$ | async) as mk">
+        <div *ngIf="!((serverError$ | async) !== null)" class="error">{{ mk | translate }}</div>
+      </div>
       
     </section>
     <footer class="modal-footer">
-      <button (click)="onLogin()">{{ 'LOGIN.BUTTON' | translate }}</button>
-      <button (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
+      <button type="button" (click)="onLogin()">{{ 'LOGIN.BUTTON' | translate }}</button>
+      <button type="button" (click)="onCancel()">{{ 'CANCEL' | translate }}</button>
     </footer>
   </div>
 </div>

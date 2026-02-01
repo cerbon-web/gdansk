@@ -15,7 +15,8 @@
     "PASSWORD": "Password",
     "BUTTON": "Login",
     "NOT_IMPLEMENTED": "Not implemented yet",
-    "INVALID": "Invalid username or password"
+    "INVALID": "Invalid username or password",
+    "REQUIRED": "Username and password required"
   }
   ,"LOGOUT": "Logout"
   ,"SUPER": {
@@ -23,4 +24,8 @@
     "OTHER": "Other",
     "DESCRIPTION": "Developer super admin panel"
   }
+  ,"BACK": "Back"
+  ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",
+  "DAILY_DRAFT_INTRO": "Daily contest (draft page)",
+  "INTERNAL": "Internal server error"
 }

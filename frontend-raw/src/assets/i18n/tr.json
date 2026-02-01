@@ -15,7 +15,8 @@
     "PASSWORD": "Parola",
     "BUTTON": "Giriş",
     "NOT_IMPLEMENTED": "Henüz uygulanmadı",
-    "INVALID": "Geçersiz kullanıcı adı veya parola"
+    "INVALID": "Geçersiz kullanıcı adı veya parola",
+    "REQUIRED": "Kullanıcı adı ve parola gerekli"
   }
   ,"LOGOUT": "Çıkış"
   ,"SUPER": {
@@ -23,4 +24,8 @@
     "OTHER": "Diğer",
     "DESCRIPTION": "Geliştirici süper yönetici paneli"
   }
+  ,"BACK": "Geri"
+  ,"QURAN_DRAFT_INTRO": "Kuran yarışması (taslak sayfa)",
+  "DAILY_DRAFT_INTRO": "Günlük yarışma (taslak sayfa)",
+  "INTERNAL": "Sunucu hatası"
 }
