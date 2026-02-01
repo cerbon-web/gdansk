@@ -1,0 +1,67 @@
+{
+  "LOADING": "Ładowanie...",
+  "OK": "OK: {{value}}",
+  "ERROR_TITLE": "Błąd",
+
+  "QURAN_CONTEST": "Konkurs Koranu",
+  "DAILY_CONTEST": "Konkurs codzienny",
+  "TITLE": "Konkurs Meczetu w Gdańsku",
+  "CREATED_AT": "Utworzono",
+  "CLOSE": "Zamknij",
+  "CANCEL": "Anuluj",
+
+  "LOGIN": {
+    "TITLE": "Logowanie",
+    "USERNAME": "Nazwa użytkownika",
+    "PASSWORD": "Hasło",
+    "BUTTON": "Zaloguj",
+    "NOT_IMPLEMENTED": "Jeszcze nie zaimplementowano",
+    "INVALID": "Nieprawidłowa nazwa użytkownika lub hasło",
+    "REQUIRED": "Nazwa użytkownika i hasło są wymagane",
+    "FORBIDDEN": "Brak dostępu"
+  },
+
+  "LOGOUT": "Wyloguj",
+  "WELCOME": "Witaj {{username}}",
+
+  "SIGNUP": {
+    "TITLE": "Zarejestruj się",
+    "USERNAME": "Nazwa użytkownika",
+    "PASSWORD": "Hasło",
+    "PASSWORD_CONFIRM": "Powtórz hasło",
+    "NAME": "Imię i nazwisko",
+    "PHONE": "Numer telefonu",
+    "BUTTON": "Zarejestruj"
+  },
+
+  "REGISTER": {
+    "REQUIRED": "Nazwa użytkownika i hasło są wymagane",
+    "EXISTS": "Użytkownik o tej nazwie już istnieje",
+    "FAILED": "Rejestracja nie powiodła się, spróbuj ponownie później"
+  },
+
+  "SUPER": {
+    "USERS_LIST": "Lista użytkowników",
+    "OTHER": "Inne",
+    "DESCRIPTION": "Panel super administratora dla dewelopera"
+  },
+
+  "BACK": "Powrót",
+
+  "USERS": {
+    "USERNAME": "Nazwa użytkownika",
+    "ROLES": "Role",
+    "CREATED_AT": "Utworzono",
+    "NO_USERS": "Brak użytkowników"
+  },
+
+  "QURAN_DRAFT_INTRO": "Konkurs Koranu (strona robocza)",
+  "DAILY_DRAFT_INTRO": "Konkurs codzienny (strona robocza)",
+
+  "INTERNAL": "Błąd serwera",
+
+  "ERROR": {
+    "INTERNAL": "Błąd serwera",
+    "DB_NOT_READY": "Baza danych nie jest gotowa"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "LOADING": "Yükleniyor...",
+  "OK": "Tamam: {{value}}",
+  "ERROR": "Hata: {{value}}",
+  "ERROR_TITLE": "Hata"
+  ,"QURAN_CONTEST": "Kuran Yarışması"
+  ,"DAILY_CONTEST": "Günlük Yarışma"
+  ,"TITLE": "Gdansk Camii Yarışması"
+  ,"CREATED_AT": "Oluşturuldu"
+  ,"CLOSE": "Kapat"
+  ,"CANCEL": "İptal",
+  "LOGIN": {
+    "TITLE": "Giriş",
+    "USERNAME": "Kullanıcı adı",
+    "PASSWORD": "Parola",
+    "BUTTON": "Giriş",
+    "NOT_IMPLEMENTED": "Henüz uygulanmadı",
+    "INVALID": "Geçersiz kullanıcı adı veya parola",
+    "REQUIRED": "Kullanıcı adı ve parola gerekli",
+    "FORBIDDEN": "Yasaklı"
+  },
+  "SIGNUP": {
+    "TITLE": "Kayıt Ol",
+    "USERNAME": "Kullanıcı adı",
+    "PASSWORD": "Parola",
+    "PASSWORD_CONFIRM": "Parolayı doğrula",
+    "NAME": "İsim",
+    "PHONE": "Telefon",
+    "BUTTON": "Kayıt Ol"
+  },
+  "REGISTER": {
+    "REQUIRED": "Kullanıcı adı ve parola gerekli",
+    "EXISTS": "Kullanıcı adı zaten mevcut"
+    ,"FAILED": "Kayıt başarısız oldu, lütfen daha sonra tekrar deneyin"
+  },
+  "LOGOUT": "Çıkış",
+  "WELCOME": "Hoşgeldin {{username}}",
+  "SUPER": {
+    "USERS_LIST": "Kullanıcı listesi",
+    "OTHER": "Diğer",
+    "DESCRIPTION": "Geliştirici süper yönetici paneli"
+  }
+  ,"BACK": "Geri"
+    ,"USERS": {
+      "USERNAME": "Kullanıcı adı",
+      "ROLES": "Roller",
+      "CREATED_AT": "Oluşturuldu",
+      "NO_USERS": "Kullanıcı bulunamadı"
+    }
+  ,"QURAN_DRAFT_INTRO": "Kuran yarışması (taslak sayfa)",
+  "DAILY_DRAFT_INTRO": "Günlük yarışma (taslak sayfa)",
+  "INTERNAL": "Sunucu hatası",
+  "ERROR": {
+    "INTERNAL": "Sunucu hatası",
+    "DB_NOT_READY": "Veritabanı hazır değil"
+  }
+}
