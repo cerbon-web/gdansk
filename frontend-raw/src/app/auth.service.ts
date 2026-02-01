@@ -28,6 +28,9 @@ export class AuthService {
         if (obj && obj.authenticated) {
           this.authenticatedSubject.next(true);
           this.rolesSubject.next(obj.roles || ['guest']);
+          if (obj.token) {
+            this._token = String(obj.token);
+          }
         }
       }
     } catch (e) {
@@ -43,7 +46,10 @@ export class AuthService {
       const roles: Role[] = Array.isArray(resp.roles) ? resp.roles : (resp.roles ? String(resp.roles).split(',').map((r: string) => r.trim()) : ['contester']);
       this.authenticatedSubject.next(true);
       this.rolesSubject.next(roles as Role[]);
-      this._persistSession(true, roles as Role[], username);
+      // store token if provided
+      const token = resp && resp.token ? String(resp.token) : undefined;
+      if (token) this._token = token;
+      this._persistSession(true, roles as Role[], username, token);
       return;
     } catch (e) {
       // try to extract server-provided error message
@@ -62,6 +68,7 @@ export class AuthService {
   logout(): void {
     this.authenticatedSubject.next(false);
     this.rolesSubject.next(['guest']);
+    this._token = undefined;
     try { localStorage.removeItem(this.STORAGE_KEY); } catch { }
   }
 
@@ -71,10 +78,17 @@ export class AuthService {
     try { this._persistSession(this.authenticatedSubject.value, roles); } catch { }
   }
 
-  private _persistSession(authenticated: boolean, roles: Role[], username?: string): void {
+  private _token?: string;
+
+  getToken(): string | undefined {
+    return this._token;
+  }
+
+  private _persistSession(authenticated: boolean, roles: Role[], username?: string, token?: string): void {
     try {
       const obj: any = { authenticated, roles };
       if (username) obj.username = username;
+      if (token) obj.token = token;
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(obj));
     } catch (e) { /* ignore */ }
   }

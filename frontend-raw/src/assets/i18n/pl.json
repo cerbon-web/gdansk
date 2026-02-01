@@ -26,6 +26,12 @@
     "DESCRIPTION": "Panel super administratora dla dewelopera"
   }
   ,"BACK": "Powrót"
+   ,"USERS": {
+     "USERNAME": "Nazwa użytkownika",
+     "ROLES": "Role",
+     "CREATED_AT": "Utworzono",
+     "NO_USERS": "Brak użytkowników"
+   }
   ,"QURAN_DRAFT_INTRO": "Konkurs Koranu (strona robocza)",
   "DAILY_DRAFT_INTRO": "Konkurs codzienny (strona robocza)",
   "INTERNAL": "Błąd serwera",

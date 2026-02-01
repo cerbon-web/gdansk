@@ -1,0 +1,6 @@
+.system-page { padding: 12px; }
+.system-header { display:flex; align-items:center; gap:12px; }
+.back-btn { background:transparent; border:0; cursor:pointer; font-size:14px; }
+.users-table { width:100%; border-collapse: collapse; margin-top:12px; }
+.users-table th, .users-table td { border:1px solid #ddd; padding:8px; text-align:left; }
+.error { color:var(--danger, #b00); }

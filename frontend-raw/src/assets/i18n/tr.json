@@ -26,6 +26,12 @@
     "DESCRIPTION": "Geliştirici süper yönetici paneli"
   }
   ,"BACK": "Geri"
+    ,"USERS": {
+      "USERNAME": "Kullanıcı adı",
+      "ROLES": "Roller",
+      "CREATED_AT": "Oluşturuldu",
+      "NO_USERS": "Kullanıcı bulunamadı"
+    }
   ,"QURAN_DRAFT_INTRO": "Kuran yarışması (taslak sayfa)",
   "DAILY_DRAFT_INTRO": "Günlük yarışma (taslak sayfa)",
   "INTERNAL": "Sunucu hatası",

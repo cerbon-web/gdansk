@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
 import { SuperComponent } from './super.component';
+import { UsersComponent } from './users.component';
 import { QuranContestComponent } from './quran-contest.component';
 import { DailyContestComponent } from './daily-contest.component';
 import { AuthService } from './auth.service';
@@ -14,7 +15,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent, QuranContestComponent, DailyContestComponent],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent, UsersComponent, QuranContestComponent, DailyContestComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -31,6 +32,7 @@ export class AppComponent {
   showSuper = false;
   showQuran = false;
   showDaily = false;
+  showUsers = false;
 
   constructor(private http: HttpClient, private translate: TranslateService, private titleService: Title, private auth: AuthService) {
     // configure ngx-translate
@@ -141,15 +143,30 @@ export class AppComponent {
     this.showDaily = false;
   }
 
+  openUsers(): void {
+    if (this.auth.isAuthenticated()) {
+      // simply open: the backend will forbid if token/role missing
+      this.showUsers = true;
+    } else {
+      this.openLogin();
+    }
+  }
+
   openSuper(): void {
     this.showSuper = true;
   }
-
+  
   closeSuper(): void {
     this.showSuper = false;
   }
 
   onLoginClose(): void {
     this.showLogin = false;
+  }
+
+  // handle navigation events from Super component
+  onSuperNavigate(target: string): void {
+    this.showSuper = false;
+    if (target === 'users') this.openUsers();
   }
 }

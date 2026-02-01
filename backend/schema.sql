@@ -6,6 +6,20 @@ CREATE TABLE IF NOT EXISTS CREATED (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Insert 10 test users for development. Passwords are plaintext for dev only.
+INSERT INTO users (username, password, roles) VALUES
+  ('user1', 'pass1', 'contester'),
+  ('user2', 'pass2', 'contester'),
+  ('user3', 'pass3', 'contester'),
+  ('user4', 'pass4', 'contester'),
+  ('user5', 'pass5', 'contester'),
+  ('user6', 'pass6', 'contester'),
+  ('user7', 'pass7', 'contester'),
+  ('user8', 'pass8', 'contester'),
+  ('user9', 'pass9', 'contester'),
+  ('user10', 'pass10', 'contester')
+ON DUPLICATE KEY UPDATE password = VALUES(password), roles = VALUES(roles);
+
 -- Main users table
 CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY AUTO_INCREMENT,

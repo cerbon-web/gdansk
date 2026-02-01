@@ -11,8 +11,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class SuperComponent {
   @Output() close = new EventEmitter<void>();
+  @Output() navigate = new EventEmitter<string>();
 
   closePanel(): void {
     this.close.emit();
+  }
+
+  open(name: string): void {
+    this.navigate.emit(name);
   }
 }

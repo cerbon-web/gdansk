@@ -26,6 +26,12 @@
     "DESCRIPTION": "Super admin panel"
   }
   ,"BACK": "Back"
+  ,"USERS": {
+    "USERNAME": "Username",
+    "ROLES": "Roles",
+    "CREATED_AT": "Created at",
+    "NO_USERS": "No users found"
+  }
   ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",
   "DAILY_DRAFT_INTRO": "Daily contest (draft page)",
   "INTERNAL": "Internal server error",
