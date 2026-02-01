@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from './auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 interface UserItem {
   username: string;
@@ -20,9 +21,14 @@ interface UserItem {
 export class UsersComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
-  users: UserItem[] = [];
-  loading = false;
-  error: string | null = null;
+  private usersSubject = new BehaviorSubject<UserItem[]>([]);
+  users$ = this.usersSubject.asObservable();
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  private errorSubject = new BehaviorSubject<string | null>(null);
+  error$ = this.errorSubject.asObservable();
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
@@ -31,19 +37,26 @@ export class UsersComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.loading = true;
-    this.error = null;
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
     const token = this.auth.getToken();
+    console.debug('[UsersComponent] token:', token);
     const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
     const url = 'https://api.cerbon.id/islam.gdansk/users';
     this.http.get<UserItem[]>(url, { headers }).subscribe({
       next: (data) => {
-        this.users = Array.isArray(data) ? data : [];
-        this.loading = false;
+        // backend returns { users: [...] }
+        if ((data as any) && Array.isArray((data as any).users)) {
+          this.usersSubject.next((data as any).users);
+        } else {
+          this.usersSubject.next(Array.isArray(data) ? data : []);
+        }
+        this.loadingSubject.next(false);
       },
       error: (err) => {
-        this.loading = false;
-        try { this.error = err?.error?.error || err?.message || 'ERROR.INTERNAL'; } catch { this.error = 'ERROR.INTERNAL'; }
+        this.loadingSubject.next(false);
+        console.debug('[UsersComponent] fetch error:', err);
+        try { this.errorSubject.next(err?.error?.error || err?.message || 'ERROR.INTERNAL'); } catch { this.errorSubject.next('ERROR.INTERNAL'); }
       }
     });
   }

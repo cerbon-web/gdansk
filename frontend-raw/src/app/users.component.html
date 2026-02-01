@@ -5,10 +5,10 @@
   </header>
 
   <section class="system-body">
-    <div *ngIf="loading">{{ 'LOADING' | translate }}</div>
-    <div *ngIf="error" class="error">{{ error | translate }}</div>
+    <div *ngIf="(loading$ | async)">{{ 'LOADING' | translate }}</div>
+    <div *ngIf="(error$ | async) as err" class="error">{{ err | translate }}</div>
 
-    <table *ngIf="!loading && users.length" class="users-table">
+    <table *ngIf="!(loading$ | async) && (users$ | async)?.length" class="users-table">
       <thead>
         <tr>
           <th>{{ 'USERS.USERNAME' | translate }}</th>
@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let u of users">
+        <tr *ngFor="let u of (users$ | async)">
           <td>{{ u.username }}</td>
           <td>{{ u.roles }}</td>
           <td>{{ u.created_at || '-' }}</td>
@@ -25,6 +25,6 @@
       </tbody>
     </table>
 
-    <div *ngIf="!loading && !users.length && !error">{{ 'USERS.NO_USERS' | translate }}</div>
+    <div *ngIf="!(loading$ | async) && !(users$ | async)?.length && !(error$ | async)">{{ 'USERS.NO_USERS' | translate }}</div>
   </section>
 </div>

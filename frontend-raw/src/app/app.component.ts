@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
-import { SuperComponent } from './super.component';
 import { UsersComponent } from './users.component';
 import { QuranContestComponent } from './quran-contest.component';
 import { DailyContestComponent } from './daily-contest.component';
@@ -15,7 +15,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, SuperComponent, UsersComponent, QuranContestComponent, DailyContestComponent],
+  imports: [CommonModule, HeaderComponent, TranslateModule, LoginComponent, UsersComponent, QuranContestComponent, DailyContestComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -29,7 +29,6 @@ export class AppComponent {
   createdAt: string | null = null;
   createdYear: string | null = null;
   showLogin = false;
-  showSuper = false;
   showQuran = false;
   showDaily = false;
   showUsers = false;
@@ -143,6 +142,10 @@ export class AppComponent {
     this.showDaily = false;
   }
 
+  closeUsers(): void {
+    this.showUsers = false;
+  }
+
   openUsers(): void {
     if (this.auth.isAuthenticated()) {
       // simply open: the backend will forbid if token/role missing
@@ -152,13 +155,6 @@ export class AppComponent {
     }
   }
 
-  openSuper(): void {
-    this.showSuper = true;
-  }
-  
-  closeSuper(): void {
-    this.showSuper = false;
-  }
 
   onLoginClose(): void {
     this.showLogin = false;
@@ -166,7 +162,6 @@ export class AppComponent {
 
   // handle navigation events from Super component
   onSuperNavigate(target: string): void {
-    this.showSuper = false;
     if (target === 'users') this.openUsers();
   }
 }

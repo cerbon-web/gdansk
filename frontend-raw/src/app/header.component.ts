@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AuthService } from './auth.service';
 import { Subscription } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
   @Output() languageChanged = new EventEmitter<string>();
   @Output() superClicked = new EventEmitter<void>();
+  @Output() loginClicked = new EventEmitter<void>();
   isSuper = false;
   private subs: Subscription | null = null;
 
-  constructor(private translate: TranslateService, public auth: AuthService) {
+  constructor(private translate: TranslateService, public auth: AuthService, private router: Router) {
     // subscribe to roles to detect 'super'
     this.subs = this.auth.roles$.subscribe(r => {
       this.isSuper = Array.isArray(r) && r.includes('super' as any);
@@ -26,6 +28,15 @@ export class HeaderComponent {
 
   logout(): void {
     this.auth.logout();
+  }
+
+  openLogin(): void {
+    this.loginClicked.emit();
+  }
+
+  openSuper(): void {
+    // navigate to the super page route
+    try { this.router.navigate(['super']); } catch { this.superClicked.emit(); }
   }
 
   switch(lang: string) {

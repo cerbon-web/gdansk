@@ -18,9 +18,9 @@
 
 <!-- Main app content only rendered after successful backend response -->
 <div *ngIf="!loading && initialized">
-  <app-header (superClicked)="openSuper()"></app-header>
+  <app-header (loginClicked)="openLogin()"></app-header>
   <main class="main-actions" role="main" aria-label="Main actions">
-    <ng-container *ngIf="!showQuran && !showDaily && !showSuper && !showUsers">
+    <ng-container *ngIf="!showQuran && !showDaily && !showUsers">
       <button class="big-action-button" aria-label="{{ 'QURAN_CONTEST' | translate }}" (click)="openQuran()">
         <img src="assets/icons/quran_mushaf.png" class="icon raster" alt="Quran">
         <span class="btn-label">{{ 'QURAN_CONTEST' | translate }}</span>
@@ -33,8 +33,8 @@
 
     <app-quran-contest *ngIf="showQuran" (close)="closePage()"></app-quran-contest>
     <app-daily-contest *ngIf="showDaily" (close)="closePage()"></app-daily-contest>
-    <app-super *ngIf="showSuper" (close)="closeSuper()" (navigate)="onSuperNavigate($event)"></app-super>
-    <app-users *ngIf="showUsers" (close)="closePage()"></app-users>
+    <router-outlet></router-outlet>
+    <app-users *ngIf="showUsers" (close)="closeUsers()"></app-users>
   </main>
 
   <app-login *ngIf="showLogin" (close)="onLoginClose()"></app-login>

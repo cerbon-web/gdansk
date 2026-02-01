@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-super',
@@ -10,14 +11,15 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./super.component.css']
 })
 export class SuperComponent {
-  @Output() close = new EventEmitter<void>();
-  @Output() navigate = new EventEmitter<string>();
+  constructor(private router: Router) {}
 
   closePanel(): void {
-    this.close.emit();
+    // navigate back to home
+    try { this.router.navigate(['/']); } catch { /* no-op */ }
   }
 
   open(name: string): void {
-    this.navigate.emit(name);
+    // for now navigate back to home — extend with routed targets later
+    try { this.router.navigate(['/']); } catch { /* no-op */ }
   }
 }

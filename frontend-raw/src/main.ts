@@ -3,6 +3,7 @@ import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideRouter } from '@angular/router';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	const baseEl = document.getElementsByTagName('base')[0];
@@ -14,6 +15,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 bootstrapApplication(AppComponent, {
 	providers: [
 		provideHttpClient(),
+		// provide router for standalone bootstrap
+		provideRouter([
+			{ path: 'super', loadComponent: () => import('./app/super.component').then(m => m.SuperComponent) }
+		]),
 		// provide providers produced by TranslateModule.forRoot for standalone bootstrap
 		...TranslateModule.forRoot({
 			loader: {
