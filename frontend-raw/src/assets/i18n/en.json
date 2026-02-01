@@ -27,5 +27,9 @@
   ,"BACK": "Back"
   ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",
   "DAILY_DRAFT_INTRO": "Daily contest (draft page)",
-  "INTERNAL": "Internal server error"
+  "INTERNAL": "Internal server error",
+  "ERROR": {
+    "INTERNAL": "Internal server error",
+    "DB_NOT_READY": "Database not ready"
+  }
 }

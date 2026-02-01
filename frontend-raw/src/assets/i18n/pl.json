@@ -27,5 +27,9 @@
   ,"BACK": "Powrót"
   ,"QURAN_DRAFT_INTRO": "Konkurs Koranu (strona robocza)",
   "DAILY_DRAFT_INTRO": "Konkurs codzienny (strona robocza)",
-  "INTERNAL": "Błąd serwera"
+  "INTERNAL": "Błąd serwera",
+  "ERROR": {
+    "INTERNAL": "Błąd serwera",
+    "DB_NOT_READY": "Baza danych nie jest gotowa"
+  }
 }
