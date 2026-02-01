@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+  <!-- clipboard -->
+  <rect x="10" y="8" width="44" height="48" rx="4" fill="#ffffff"/>
+  <rect x="22" y="4" width="20" height="8" rx="2" fill="#ffffff"/>
+
+  <!-- lines and checks -->
+  <g fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 20h16"/>
+    <path d="M22 28h16"/>
+    <path d="M22 36h16"/>
+    <path d="M16 20l3 3 5-6" stroke="#0f172a"/>
+    <path d="M16 28l3 3 5-6" stroke="#0f172a"/>
+  </g>
+</svg>

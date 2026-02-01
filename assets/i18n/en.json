@@ -1,0 +1,35 @@
+{
+  "LOADING": "Loading",
+  "OK": "OK: {{value}}",
+  "ERROR": "Error: {{value}}",
+  "ERROR_TITLE": "Error"
+  ,"QURAN_CONTEST": "Quran Contest"
+  ,"DAILY_CONTEST": "Daily Contest"
+  ,"TITLE": "Gdansk Mosque Contest"
+  ,"CREATED_AT": "Created at"
+  ,"CLOSE": "Close"
+  ,"CANCEL": "Cancel"
+  ,"LOGIN": {
+    "TITLE": "Login",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "BUTTON": "Login",
+    "NOT_IMPLEMENTED": "Not implemented yet",
+    "INVALID": "Invalid username or password",
+    "REQUIRED": "Username and password required"
+  }
+  ,"LOGOUT": "Logout"
+  ,"SUPER": {
+    "USERS_LIST": "Users list",
+    "OTHER": "Other",
+    "DESCRIPTION": "Developer super admin panel"
+  }
+  ,"BACK": "Back"
+  ,"QURAN_DRAFT_INTRO": "Quran contest (draft page)",
+  "DAILY_DRAFT_INTRO": "Daily contest (draft page)",
+  "INTERNAL": "Internal server error",
+  "ERROR": {
+    "INTERNAL": "Internal server error",
+    "DB_NOT_READY": "Database not ready"
+  }
+}

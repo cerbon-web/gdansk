@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="6" fill="#b22234"/>
+  <!-- stripes -->
+  <g>
+    <rect y="0" width="64" height="6" fill="#b22234"/>
+    <rect y="6" width="64" height="6" fill="#fff"/>
+    <rect y="12" width="64" height="6" fill="#b22234"/>
+    <rect y="18" width="64" height="6" fill="#fff"/>
+    <rect y="24" width="64" height="6" fill="#b22234"/>
+    <rect y="30" width="64" height="6" fill="#fff"/>
+    <rect y="36" width="64" height="6" fill="#b22234"/>
+    <rect y="42" width="64" height="6" fill="#fff"/>
+  </g>
+  <!-- canton -->
+  <rect x="0" y="0" width="28" height="26" fill="#3c3b6e"/>
+  <!-- simple stars grid -->
+  <g fill="#fff">
+    <circle cx="5" cy="5" r="1.4"/>
+    <circle cx="10" cy="5" r="1.4"/>
+    <circle cx="15" cy="5" r="1.4"/>
+    <circle cx="20" cy="5" r="1.4"/>
+    <circle cx="5" cy="10" r="1.4"/>
+    <circle cx="10" cy="10" r="1.4"/>
+    <circle cx="15" cy="10" r="1.4"/>
+    <circle cx="20" cy="10" r="1.4"/>
+    <circle cx="5" cy="15" r="1.4"/>
+    <circle cx="10" cy="15" r="1.4"/>
+    <circle cx="15" cy="15" r="1.4"/>
+  </g>
+  <!-- EN overlay badge -->
+  <rect x="40" y="36" width="20" height="14" rx="3" fill="#000" opacity="0.75"/>
+  <text x="50" y="46" font-size="9" fill="#fff" font-family="Arial, sans-serif" text-anchor="middle" font-weight="700">EN</text>
+</svg>
